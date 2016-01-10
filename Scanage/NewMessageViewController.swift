@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  NewMessageViewController.swift
 //  Scanage
 //
 //  Created by Tianyi Wang on 1/9/16.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class NewMessageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
 
 }
-
