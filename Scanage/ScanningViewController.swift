@@ -26,7 +26,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         }
         catch {
             // Show error message
-            let alert = UIAlertController(title: "Device Error", message: "Device not supported for this app.",
+            let alert = UIAlertController(title: "Device Error", message: "Please enable camera for this app in Settings.",
                 preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
