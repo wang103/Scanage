@@ -16,6 +16,35 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     var qrCodeView: UIView?
     
     
+    func captureOutput(captureOutput: AVCaptureOutput!,
+        didOutputMetadataObjects metadataObjects: [AnyObject]!,
+        fromConnection connection: AVCaptureConnection!) {
+        
+        if metadataObjects == nil || metadataObjects.count == 0 {
+            qrCodeView?.frame = CGRectZero
+            return
+        }
+        
+        let avMetadataCodeObject = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+        
+        if avMetadataCodeObject.type == AVMetadataObjectTypeQRCode {
+            // Convert AVMetadataObject's visual properties to the receiver (the layer)'s coordinates.
+            let qrCodeObj = captureVideoPreviewLayer?.transformedMetadataObjectForMetadataObject(avMetadataCodeObject) as! AVMetadataMachineReadableCodeObject
+            
+            qrCodeView?.frame = qrCodeObj.bounds
+            
+            if avMetadataCodeObject.stringValue != nil {
+                // Success!
+                
+                
+                
+                return
+            }
+        }
+        
+        qrCodeView?.frame = CGRectZero
+    }
+    
     func configureVideoCapture() -> Bool {
         
         let captureDevice: AVCaptureDevice! = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
@@ -71,6 +100,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     
     func initQRView() {
         qrCodeView = UIView()
+        qrCodeView?.frame = CGRectZero
         qrCodeView?.layer.borderColor = UIColor.redColor().CGColor
         qrCodeView?.layer.borderWidth = 5
         
