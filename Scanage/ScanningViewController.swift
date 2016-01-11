@@ -56,6 +56,29 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         captureSession?.startRunning()
     }
     
+    func updateVideoPreviewLayerOrientation() {
+        let deviceOrientation = UIDevice.currentDevice().orientation
+        
+        switch deviceOrientation {
+        case .LandscapeLeft:
+            captureVideoPreviewLayer?.connection.videoOrientation = .LandscapeRight
+        case .LandscapeRight:
+            captureVideoPreviewLayer?.connection.videoOrientation = .LandscapeLeft
+        default:
+            captureVideoPreviewLayer?.connection.videoOrientation = .Portrait
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        captureVideoPreviewLayer?.frame = view.layer.bounds
+        
+        if captureVideoPreviewLayer?.connection.supportsVideoOrientation == true {
+            updateVideoPreviewLayerOrientation()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
