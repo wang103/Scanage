@@ -46,17 +46,28 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         return true
     }
     
+    func addVideoPreviewLayer() {
+        captureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        captureVideoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        captureVideoPreviewLayer?.frame = view.layer.bounds
+        
+        self.view.layer.addSublayer(captureVideoPreviewLayer!)
+        
+        captureSession?.startRunning()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        configureVideoCapture()
+        
+        if (configureVideoCapture()) {
+            addVideoPreviewLayer()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
