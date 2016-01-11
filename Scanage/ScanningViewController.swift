@@ -69,6 +69,15 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         }
     }
     
+    func initQRView() {
+        qrCodeView = UIView()
+        qrCodeView?.layer.borderColor = UIColor.redColor().CGColor
+        qrCodeView?.layer.borderWidth = 5
+        
+        self.view.addSubview(qrCodeView!)
+        self.view.bringSubviewToFront(qrCodeView!)
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -86,6 +95,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         
         if (configureVideoCapture()) {
             addVideoPreviewLayer()
+            initQRView()
         }
     }
 
