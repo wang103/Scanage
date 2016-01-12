@@ -505,6 +505,7 @@
 				801CEADF1C4229E700CDB3A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		801CEAE01C4229E700CDB3A5 /* Build configuration list for PBXNativeTarget "ScanageTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +514,7 @@
 				801CEAE21C4229E700CDB3A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		801CEAE31C4229E700CDB3A5 /* Build configuration list for PBXNativeTarget "ScanageUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +523,7 @@
 				801CEAE51C4229E700CDB3A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
