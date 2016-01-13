@@ -9,7 +9,11 @@
 import AVFoundation
 import UIKit
 
-class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+protocol ScanningViewControllerDelegate {
+    func startCaptureSession()
+}
+
+class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, ScanningViewControllerDelegate {
 
     private var captureSession: AVCaptureSession?   // coordinate the flow of data from input device to output device
     private var captureVideoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -22,12 +26,20 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         if msgDetailsViewController == nil {
             msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
             msgDetailsViewController.view.frame = view.layer.bounds
+            msgDetailsViewController.scanningVCDelegate = self
         }
         
         self.addChildViewController(msgDetailsViewController!)
         self.view.addSubview(msgDetailsViewController!.view)
         self.view.bringSubviewToFront(msgDetailsViewController!.view)
         msgDetailsViewController!.didMoveToParentViewController(self)
+    }
+    
+    func startCaptureSession() {
+        if captureSession?.running == false {
+            captureSession?.startRunning()
+        }
+        qrCodeView?.frame = CGRectZero
     }
     
     func captureOutput(captureOutput: AVCaptureOutput!,
@@ -138,10 +150,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if captureSession?.running == false {
-            captureSession?.startRunning()
-        }
     }
     
     override func viewDidLoad() {
@@ -156,6 +164,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         
         msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
         msgDetailsViewController.view.frame = view.layer.bounds
+        msgDetailsViewController.scanningVCDelegate = self
     }
 
     override func didReceiveMemoryWarning() {
