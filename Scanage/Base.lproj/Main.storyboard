@@ -122,6 +122,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chI-CS-MoF">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Message Details" id="EYy-bH-ySG">
+                                        <barButtonItem key="backBarButtonItem" title="Bacj" id="Fi8-mT-Ybj"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="o7j-RY-8lO">
+                                            <connections>
+                                                <action selector="removeFromParent:" destination="vD3-LO-yN5" id="ZQw-WQ-Czq"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

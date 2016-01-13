@@ -11,4 +11,9 @@ import UIKit
 
 class MessageDetailsViewController: UIViewController {
     
+    @IBAction func removeFromParent(sender: UIBarButtonItem) {
+        self.willMoveToParentViewController(nil)
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+    }
 }
