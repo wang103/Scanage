@@ -21,10 +21,13 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     func switchToMsgDetailsView() {
         if msgDetailsViewController == nil {
             msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
-            msgDetailsViewController.view.frame = view.frame
+            msgDetailsViewController.view.frame = view.layer.bounds
         }
         
-        self.presentViewController(msgDetailsViewController, animated: true, completion: nil)
+        self.addChildViewController(msgDetailsViewController!)
+        self.view.addSubview(msgDetailsViewController!.view)
+        self.view.bringSubviewToFront(msgDetailsViewController!.view)
+        msgDetailsViewController!.didMoveToParentViewController(self)
     }
     
     func captureOutput(captureOutput: AVCaptureOutput!,
@@ -124,9 +127,12 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         super.viewWillLayoutSubviews()
         
         captureVideoPreviewLayer?.frame = view.layer.bounds
-        
         if captureVideoPreviewLayer?.connection.supportsVideoOrientation == true {
             updateVideoPreviewLayerOrientation()
+        }
+        
+        if msgDetailsViewController != nil {
+            msgDetailsViewController.view.frame = view.layer.bounds
         }
     }
     
@@ -149,7 +155,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         }
         
         msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
-        msgDetailsViewController.view.frame = view.frame
+        msgDetailsViewController.view.frame = view.layer.bounds
     }
 
     override func didReceiveMemoryWarning() {
