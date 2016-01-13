@@ -11,10 +11,21 @@ import UIKit
 
 class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
-    var captureSession: AVCaptureSession?   // coordinate the flow of data from input device to output device
-    var captureVideoPreviewLayer: AVCaptureVideoPreviewLayer?
-    var qrCodeView: UIView?
+    private var captureSession: AVCaptureSession?   // coordinate the flow of data from input device to output device
+    private var captureVideoPreviewLayer: AVCaptureVideoPreviewLayer?
+    private var qrCodeView: UIView?
     
+    private var msgDetailsViewController: MessageDetailsViewController!
+    
+    
+    func switchToMsgDetailsView() {
+        if msgDetailsViewController == nil {
+            msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
+            msgDetailsViewController.view.frame = view.frame
+        }
+        
+        self.presentViewController(msgDetailsViewController, animated: true, completion: nil)
+    }
     
     func captureOutput(captureOutput: AVCaptureOutput!,
         didOutputMetadataObjects metadataObjects: [AnyObject]!,
@@ -36,7 +47,8 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
             if avMetadataCodeObject.stringValue != nil {
                 // Success!
                 
-                
+                captureSession?.stopRunning()
+                switchToMsgDetailsView()
                 
                 return
             }
@@ -118,6 +130,14 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if captureSession?.running == false {
+            captureSession?.startRunning()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -127,10 +147,17 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
             addVideoPreviewLayer()
             initQRView()
         }
+        
+        msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
+        msgDetailsViewController.view.frame = view.frame
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+        if msgDetailsViewController != nil && msgDetailsViewController.view.superview == nil {
+            msgDetailsViewController = nil
+        }
     }
 }
