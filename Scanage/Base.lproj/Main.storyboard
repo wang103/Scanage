@@ -122,11 +122,11 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chI-CS-MoF">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="chI-CS-MoF">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
                                     <navigationItem title="Message Details" id="EYy-bH-ySG">
-                                        <barButtonItem key="backBarButtonItem" title="Bacj" id="Fi8-mT-Ybj"/>
+                                        <barButtonItem key="backBarButtonItem" id="Fi8-mT-Ybj"/>
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="o7j-RY-8lO">
                                             <connections>
                                                 <action selector="removeFromParent:" destination="vD3-LO-yN5" id="ZQw-WQ-Czq"/>
@@ -138,8 +138,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="chI-CS-MoF" firstAttribute="leading" secondItem="5Z9-CO-du4" secondAttribute="leading" id="QCL-mE-oTn"/>
                             <constraint firstItem="2te-UA-dE9" firstAttribute="centerY" secondItem="5Z9-CO-du4" secondAttribute="centerY" id="Vfy-gW-dsa"/>
+                            <constraint firstItem="chI-CS-MoF" firstAttribute="top" secondItem="yyr-IQ-KVf" secondAttribute="bottom" id="ogI-Du-6Jn"/>
                             <constraint firstItem="2te-UA-dE9" firstAttribute="centerX" secondItem="5Z9-CO-du4" secondAttribute="centerX" id="rIc-I5-QbC"/>
+                            <constraint firstItem="chI-CS-MoF" firstAttribute="width" secondItem="5Z9-CO-du4" secondAttribute="width" id="wEA-5E-2Gs"/>
                         </constraints>
                     </view>
                 </viewController>
