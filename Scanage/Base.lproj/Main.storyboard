@@ -289,6 +289,7 @@
                                             <constraint firstItem="rDM-kH-AlW" firstAttribute="trailing" secondItem="OZO-ZY-ggi" secondAttribute="trailingMargin" id="VJd-X4-gtI"/>
                                             <constraint firstItem="y5J-Ef-PmB" firstAttribute="top" secondItem="fQR-3o-ggO" secondAttribute="top" id="XtN-xo-yPW"/>
                                             <constraint firstItem="rDM-kH-AlW" firstAttribute="bottom" secondItem="DAK-B5-bjg" secondAttribute="bottom" id="Y8d-J3-B9r"/>
+                                            <constraint firstAttribute="height" constant="536" id="Ybp-bD-n9K"/>
                                             <constraint firstItem="6rv-8I-DWX" firstAttribute="trailing" secondItem="OZO-ZY-ggi" secondAttribute="trailingMargin" id="bg4-uo-AMf"/>
                                             <constraint firstItem="XTT-OP-YIf" firstAttribute="leading" secondItem="UNS-8C-AUb" secondAttribute="trailing" constant="8" id="dZ3-T0-hvr"/>
                                             <constraint firstItem="dV6-Kc-0us" firstAttribute="top" secondItem="DAK-B5-bjg" secondAttribute="bottom" constant="8" id="dfm-t9-uay"/>
@@ -317,10 +318,9 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="OZO-ZY-ggi" firstAttribute="centerY" secondItem="Ncl-I9-jeX" secondAttribute="centerY" id="5e3-eW-dsB"/>
                                     <constraint firstAttribute="bottom" secondItem="OZO-ZY-ggi" secondAttribute="bottom" id="BAh-lf-C3v"/>
-                                    <constraint firstItem="OZO-ZY-ggi" firstAttribute="leading" secondItem="Ncl-I9-jeX" secondAttribute="leading" id="GcU-bB-7v6"/>
-                                    <constraint firstItem="OZO-ZY-ggi" firstAttribute="top" secondItem="Ncl-I9-jeX" secondAttribute="top" id="H5d-vq-IRO"/>
+                                    <constraint firstAttribute="leading" secondItem="OZO-ZY-ggi" secondAttribute="leading" id="GcU-bB-7v6"/>
+                                    <constraint firstAttribute="top" secondItem="OZO-ZY-ggi" secondAttribute="top" id="H5d-vq-IRO"/>
                                     <constraint firstItem="OZO-ZY-ggi" firstAttribute="centerX" secondItem="Ncl-I9-jeX" secondAttribute="centerX" id="Wgf-7W-IpN"/>
                                     <constraint firstAttribute="trailing" secondItem="OZO-ZY-ggi" secondAttribute="trailing" id="eiM-uR-E90"/>
                                 </constraints>
