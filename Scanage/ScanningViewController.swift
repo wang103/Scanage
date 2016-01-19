@@ -15,6 +15,8 @@ protocol ScanningViewControllerDelegate {
 
 class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, ScanningViewControllerDelegate {
 
+    @IBOutlet var spinner: UIActivityIndicatorView!
+    
     private var captureSession: AVCaptureSession?   // coordinate the flow of data from input device to output device
     private var captureVideoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var qrCodeView: UIView?
@@ -42,6 +44,21 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         qrCodeView?.frame = CGRectZero
     }
     
+    func qrCodeCaptured() {
+        spinner.startAnimating()
+        
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
+        dispatch_async(queue) {
+            NSThread.sleepForTimeInterval(5)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.spinner.stopAnimating()
+                
+                self.switchToMsgDetailsView()
+            }
+        }
+    }
+    
     func captureOutput(captureOutput: AVCaptureOutput!,
         didOutputMetadataObjects metadataObjects: [AnyObject]!,
         fromConnection connection: AVCaptureConnection!) {
@@ -61,9 +78,10 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
             
             if avMetadataCodeObject.stringValue != nil {
                 // Success!
-                
+
                 captureSession?.stopRunning()
-                switchToMsgDetailsView()
+                
+                qrCodeCaptured()
                 
                 return
             }
@@ -135,6 +153,10 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         self.view.bringSubviewToFront(qrCodeView!)
     }
     
+    func initSpinner() {
+        self.view.bringSubviewToFront(spinner)
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -160,6 +182,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         if (configureVideoCapture()) {
             addVideoPreviewLayer()
             initQRView()
+            initSpinner()
         }
         
         msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
