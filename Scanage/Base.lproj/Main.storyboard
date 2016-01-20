@@ -349,6 +349,11 @@
                             <constraint firstItem="chI-CS-MoF" firstAttribute="width" secondItem="5Z9-CO-du4" secondAttribute="width" id="wEA-5E-2Gs"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="creatorField" destination="G7L-R8-cRD" id="L92-n8-AND"/>
+                        <outlet property="dateField" destination="y5J-Ef-PmB" id="dYm-Mq-HND"/>
+                        <outlet property="textMsgField" destination="dV6-Kc-0us" id="R74-7J-0bn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PDk-SB-EwB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

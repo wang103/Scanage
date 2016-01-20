@@ -61,7 +61,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
                     print("fail")
                 }
                 else {
-                    print("success")
+                    self.switchToMsgDetailsView(result!)
                 }
             }
         }

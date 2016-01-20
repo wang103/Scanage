@@ -15,11 +15,19 @@ class MessageDetailsViewController: UIViewController {
     
     var fieldsData: NSDictionary! = nil
     
+    @IBOutlet var creatorField: UILabel!
+    @IBOutlet var dateField: UILabel!
+    @IBOutlet var textMsgField: UITextView!
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        let fieldsDataDict = fieldsData.valueForKey("msg_detail") as! NSDictionary
         
+        self.creatorField.text = fieldsDataDict.valueForKey("creator") as? String
+        self.dateField.text = fieldsDataDict.valueForKey("create_date") as? String
+        self.textMsgField.text = fieldsDataDict.valueForKey("msg_text") as? String
     }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
