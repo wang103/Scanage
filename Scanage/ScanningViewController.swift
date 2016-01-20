@@ -24,12 +24,14 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     private var msgDetailsViewController: MessageDetailsViewController!
     
     
-    func switchToMsgDetailsView() {
+    func switchToMsgDetailsView(result: NSDictionary) {
         if msgDetailsViewController == nil {
             msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
             msgDetailsViewController.view.frame = view.layer.bounds
             msgDetailsViewController.scanningVCDelegate = self
         }
+        
+        msgDetailsViewController.fieldsData = result
         
         self.addChildViewController(msgDetailsViewController!)
         self.view.addSubview(msgDetailsViewController!.view)
@@ -44,17 +46,23 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         qrCodeView?.frame = CGRectZero
     }
     
-    func qrCodeCaptured() {
+    func qrCodeCaptured(qrString: String) {
         spinner.startAnimating()
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
         dispatch_async(queue) {
-            NSThread.sleepForTimeInterval(5)
+            // Send a GET request to retrieve the msg associated with the QR string.
+            let result = ServerAPIHelper.getMessage(qrString)
             
             dispatch_async(dispatch_get_main_queue()) {
                 self.spinner.stopAnimating()
                 
-                self.switchToMsgDetailsView()
+                if result == nil || result!.valueForKey("success") as! Bool == false {
+                    print("fail")
+                }
+                else {
+                    print("success")
+                }
             }
         }
     }
@@ -81,7 +89,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
 
                 captureSession?.stopRunning()
                 
-                qrCodeCaptured()
+                qrCodeCaptured(avMetadataCodeObject.stringValue)
                 
                 return
             }

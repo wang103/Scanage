@@ -13,6 +13,14 @@ class MessageDetailsViewController: UIViewController {
     
     var scanningVCDelegate: ScanningViewControllerDelegate! = nil
     
+    var fieldsData: NSDictionary! = nil
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+    }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
         self.willMoveToParentViewController(nil)
