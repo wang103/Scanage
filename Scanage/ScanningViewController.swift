@@ -58,7 +58,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
                 self.spinner.stopAnimating()
                 
                 if result == nil || result!.valueForKey("success") as! Bool == false {
-                    print("fail")
+                    print("qrCodeCaptured failed")
                 }
                 else {
                     self.switchToMsgDetailsView(result!)

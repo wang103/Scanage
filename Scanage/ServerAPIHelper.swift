@@ -14,6 +14,19 @@ class ServerAPIHelper {
     
     static func getMessage(qrCode: String) -> NSDictionary? {
         let urlString = rootURL + "msg/" + qrCode
+        
+        return getJsonInDictFromURL(urlString)
+    }
+    
+    static func getLoginInfo() -> NSDictionary? {
+        let urlString = rootURL + "check_login/"
+        
+        return getJsonInDictFromURL(urlString)
+    }
+    
+    /*** private helper methods ***/
+    
+    private static func getJsonInDictFromURL(urlString: String) -> NSDictionary? {
         let url = NSURL(string: urlString)
         
         if url == nil {
