@@ -160,7 +160,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fhH-li-YFl">
                                 <rect key="frame" x="112" y="95" width="468" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i2U-M0-aTJ">
                                 <rect key="frame" x="20" y="155" width="560" height="21"/>
@@ -216,7 +216,9 @@
                     <connections>
                         <outlet property="errorMsgLabel" destination="i2U-M0-aTJ" id="7zb-v0-40u"/>
                         <outlet property="loginButton" destination="Lc4-41-msl" id="wq0-vs-yb8"/>
+                        <outlet property="passwordField" destination="fhH-li-YFl" id="XHg-ll-R6L"/>
                         <outlet property="spinner" destination="uE4-k8-9AH" id="Owz-gF-bZ6"/>
+                        <outlet property="usernameField" destination="WzG-EO-c7A" id="kFj-6m-vwh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CIm-Yj-c4c" userLabel="First Responder" sceneMemberID="firstResponder"/>

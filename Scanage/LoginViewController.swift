@@ -20,8 +20,58 @@ class LoginViewController: UIViewController {
     @IBOutlet var errorMsgLabel: UILabel!
     
     
+    func removeFromParent() {
+        self.willMoveToParentViewController(nil)
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+    }
+    
     @IBAction func login(sender: UIButton) {
-        print("Login button pressed")
+        let username = self.usernameField.text
+        if username == nil || username!.isEmpty {
+            errorMsgLabel.text = "Username cannot be empty"
+            return
+        }
+        
+        let password = self.passwordField.text
+        if password == nil || password!.isEmpty {
+            errorMsgLabel.text = "Password cannot be empty"
+            return
+        }
+        
+        self.startSpinner()
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
+        dispatch_async(queue) {
+            // Send a POST request to log in.
+            let result = ServerAPIHelper.login(username!, password: password!)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.stopSpinner()
+                
+                if result == nil {
+                    print("login failed")
+                }
+                else if result!.valueForKey("success") as! Bool == false {
+                    let ec = result!.valueForKey("ec") as! Int
+                    
+                    if ec == ServerAPIHelper.EC_INVALID_CREDS {
+                        self.errorMsgLabel.text = "Invalid username or password"
+                    }
+                    else if ec == ServerAPIHelper.EC_ACCOUNT_DISABLED {
+                        self.errorMsgLabel.text = "This account has been disabled"
+                    }
+                    else {
+                        self.errorMsgLabel.text = "Account error"
+                    }
+                    
+                    return
+                }
+                else {
+                    // Successfully logged in.
+                    self.removeFromParent()
+                }
+            }
+        }
     }
     
     
