@@ -17,6 +17,7 @@
 		801CEAD91C4229E700CDB3A5 /* ScanageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CEAD81C4229E700CDB3A5 /* ScanageUITests.swift */; };
 		801CEAE71C423B4300CDB3A5 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CEAE61C423B4300CDB3A5 /* NewMessageViewController.swift */; };
 		8042BE891C46272700D3BADD /* MessageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042BE881C46272700D3BADD /* MessageDetailsViewController.swift */; };
+		808E7B361CB19F730089965D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808E7B351CB19F730089965D /* LoginViewController.swift */; };
 		80DF30571C4E249800B0C1AB /* ServerAPIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DF30561C4E249800B0C1AB /* ServerAPIHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		801CEADA1C4229E700CDB3A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		801CEAE61C423B4300CDB3A5 /* NewMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		8042BE881C46272700D3BADD /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
+		808E7B351CB19F730089965D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		80DF30561C4E249800B0C1AB /* ServerAPIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerAPIHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +143,7 @@
 				801CEAB81C4229E700CDB3A5 /* ScanningViewController.swift */,
 				801CEABA1C4229E700CDB3A5 /* AccountViewController.swift */,
 				8042BE881C46272700D3BADD /* MessageDetailsViewController.swift */,
+				808E7B351CB19F730089965D /* LoginViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808E7B361CB19F730089965D /* LoginViewController.swift in Sources */,
 				801CEABB1C4229E700CDB3A5 /* AccountViewController.swift in Sources */,
 				80DF30571C4E249800B0C1AB /* ServerAPIHelper.swift in Sources */,
 				801CEAB71C4229E700CDB3A5 /* AppDelegate.swift in Sources */,

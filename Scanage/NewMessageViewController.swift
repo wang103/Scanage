@@ -13,6 +13,21 @@ class NewMessageViewController: UIViewController {
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var spinnerMsgLabel: UILabel!
     
+    private var loginViewController: LoginViewController!
+    
+    
+    func switchToLoginView() {
+        if loginViewController == nil {
+            loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
+            loginViewController.view.frame = view.layer.bounds
+        }
+        
+        self.addChildViewController(loginViewController!)
+        self.view.addSubview(loginViewController!.view)
+        self.view.bringSubviewToFront(loginViewController!.view)
+        loginViewController!.didMoveToParentViewController(self)
+    }
+    
     func testIfLoggedIn() {
         self.spinnerMsgLabel.hidden = false
         self.spinnerMsgLabel.text = "checking login status..."
@@ -31,18 +46,28 @@ class NewMessageViewController: UIViewController {
                     print("testIfLoggedIn failed")
                 }
                 else {
-                    //self.switchToMsgDetailsView(result!)
-                    let tempResult = result!.valueForKey("is_logged_in") as! Bool
-                    print("is_logged_in: \(tempResult)")
+                    let fLoggedIn = result!.valueForKey("is_logged_in") as! Bool
+                    if !fLoggedIn {
+                        self.switchToLoginView()
+                    }
                 }
             }
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        if loginViewController != nil {
+            loginViewController.view.frame = view.layer.bounds
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        testIfLoggedIn()
+        // If not showing the login view, test if need to log in.
+        if loginViewController == nil || loginViewController.view.superview == nil {
+            testIfLoggedIn()
+        }
     }
     
     func initSpinner() {
@@ -57,10 +82,16 @@ class NewMessageViewController: UIViewController {
         super.viewDidLoad()
 
         initSpinner()
+        
+        loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
+        loginViewController.view.frame = view.layer.bounds
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        if loginViewController != nil && loginViewController.view.superview == nil {
+            loginViewController = nil
+        }
     }
 }
