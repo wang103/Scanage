@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
     
+    @IBOutlet var errorMsgLabel: UILabel!
+    
     
     @IBAction func login(sender: UIButton) {
         print("Login button pressed")
