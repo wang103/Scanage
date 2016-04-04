@@ -23,8 +23,38 @@ class ServerAPIHelper {
     static let EC_EMPTY_MESSAGE      = 9
     
     
-    static func login(username: String, password: String) -> NSDictionary? {
-        return nil
+    static func login(username: String, password: String, completion: NSDictionary? -> ()) {
+        let urlString = rootURL + "login_usr/"
+        let url = NSURL(string: urlString)
+        
+        if url == nil {
+            return
+        }
+        
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        
+        let postString = "username=" + username + "&password=" + password
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+            var result: NSDictionary? = nil
+            
+            if error != nil || data == nil {
+                result = nil
+            }
+            else {
+                do {
+                    result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                } catch {
+                    result = nil
+                }
+            }
+            
+            completion(result)
+        }
+        
+        task.resume()
     }
     
     static func getLoginInfo() -> NSDictionary? {

@@ -26,6 +26,35 @@ class LoginViewController: UIViewController {
         self.removeFromParentViewController()
     }
     
+    func loginCompleted(result: NSDictionary?) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.stopSpinner()
+            
+            if result == nil {
+                print("login failed")
+            }
+            else if result!.valueForKey("success") as! Bool == false {
+                let ec = result!.valueForKey("ec") as! Int
+                
+                if ec == ServerAPIHelper.EC_INVALID_CREDS {
+                    self.errorMsgLabel.text = "Invalid username or password"
+                }
+                else if ec == ServerAPIHelper.EC_ACCOUNT_DISABLED {
+                    self.errorMsgLabel.text = "This account has been disabled"
+                }
+                else {
+                    self.errorMsgLabel.text = "Account error"
+                }
+                
+                return
+            }
+            else {
+                // Successfully logged in.
+                self.removeFromParent()
+            }
+        }
+    }
+    
     @IBAction func login(sender: UIButton) {
         let username = self.usernameField.text
         if username == nil || username!.isEmpty {
@@ -40,38 +69,9 @@ class LoginViewController: UIViewController {
         }
         
         self.startSpinner()
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
-        dispatch_async(queue) {
-            // Send a POST request to log in.
-            let result = ServerAPIHelper.login(username!, password: password!)
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.stopSpinner()
-                
-                if result == nil {
-                    print("login failed")
-                }
-                else if result!.valueForKey("success") as! Bool == false {
-                    let ec = result!.valueForKey("ec") as! Int
-                    
-                    if ec == ServerAPIHelper.EC_INVALID_CREDS {
-                        self.errorMsgLabel.text = "Invalid username or password"
-                    }
-                    else if ec == ServerAPIHelper.EC_ACCOUNT_DISABLED {
-                        self.errorMsgLabel.text = "This account has been disabled"
-                    }
-                    else {
-                        self.errorMsgLabel.text = "Account error"
-                    }
-                    
-                    return
-                }
-                else {
-                    // Successfully logged in.
-                    self.removeFromParent()
-                }
-            }
-        }
+        
+        // Send a POST request to log in.
+        ServerAPIHelper.login(username!, password: password!, completion: loginCompleted)
     }
     
     
