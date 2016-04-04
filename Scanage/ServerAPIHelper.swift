@@ -41,12 +41,14 @@ class ServerAPIHelper {
             var result: NSDictionary? = nil
             
             if error != nil || data == nil {
+                print("login: error is present or data is absent")
                 result = nil
             }
             else {
                 do {
                     result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                 } catch {
+                    print("login: invalid JSON")
                     result = nil
                 }
             }
