@@ -61,10 +61,9 @@ class ServerAPIHelper {
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
         
-        let postString = "username=" + username + "&password=" + password
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
         return { csrfToken in
+            let postString = "username=" + username + "&password=" + password + "&csrfmiddlewaretoken=" + csrfToken
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
             
             let cookiesAddr = NSURL(string: cookieURL)
             let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)
