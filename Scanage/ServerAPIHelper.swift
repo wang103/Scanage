@@ -26,39 +26,14 @@ class ServerAPIHelper {
     
     
     static func login(username: String, password: String, completion: NSDictionary? -> ()) {
-        let urlString = rootURL + "login_usr/"
-        let url = NSURL(string: urlString)
+        let toLogin = loginHelper(username, password: password, completion: completion)
         
-        if url == nil {
-            return
+        if toLogin == nil {
+            print("error: loginHelper failed")
         }
-        
-        let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "POST"
-        
-        let postString = "username=" + username + "&password=" + password
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
-            var result: NSDictionary? = nil
-            
-            if error != nil || data == nil {
-                print("login: error is present or data is absent")
-                result = nil
-            }
-            else {
-                do {
-                    result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
-                } catch {
-                    print("login: invalid JSON")
-                    result = nil
-                }
-            }
-            
-            completion(result)
+        else {
+            ensureCookie(toLogin!)
         }
-        
-        task.resume()
     }
     
     static func getLoginInfo() -> NSDictionary? {
@@ -74,6 +49,56 @@ class ServerAPIHelper {
     }
     
     /*** private helper methods ***/
+    
+    private static func loginHelper(username: String, password: String, completion: NSDictionary? -> ()) -> (String -> ())? {
+        let urlString = rootURL + "login_usr/"
+        let url = NSURL(string: urlString)
+        
+        if url == nil {
+            return nil
+        }
+        
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        
+        let postString = "username=" + username + "&password=" + password
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        return { csrfToken in
+            
+            let cookiesAddr = NSURL(string: cookieURL)
+            let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)
+            if cookies != nil {
+                request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(cookies!)
+            }
+            else {
+                print("loginHelper: about to send POST but cookie is nil")
+            }
+            
+            request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+                var result: NSDictionary? = nil
+                
+                if error != nil || data == nil {
+                    print("loginHelper: error is present or data is absent")
+                    result = nil
+                }
+                else {
+                    do {
+                        result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    } catch {
+                        print("loginHelper: invalid JSON")
+                        result = nil
+                    }
+                }
+                
+                completion(result)
+            }
+            
+            task.resume()
+        }
+    }
     
     private static func ensureCookie(completion: String -> ()) {
         let url = NSURL(string: cookieURL)
@@ -107,6 +132,9 @@ class ServerAPIHelper {
             
             if csrfToken != nil {
                 completion(csrfToken!)
+            }
+            else {
+                print("error: cookieURL did not return CSRF token")
             }
         }
         
