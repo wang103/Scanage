@@ -12,6 +12,8 @@ class ServerAPIHelper {
     
     static let rootURL = "http://scan-to-reveal-app-dev.elasticbeanstalk.com/stv/"
     
+    static let cookieURL = rootURL + "new_usr/"
+    
     static let EC_INVALID_USERNAME   = 1
     static let EC_USERNAME_EXISTS    = 2
     static let EC_INVALID_PASSWORD   = 3
@@ -72,6 +74,44 @@ class ServerAPIHelper {
     }
     
     /*** private helper methods ***/
+    
+    private static func ensureCookie(completion: String -> ()) {
+        let url = NSURL(string: cookieURL)
+        if url == nil {
+            return
+        }
+        
+        let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(url!)
+        
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPShouldHandleCookies = true
+        if cookies != nil {
+            request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(cookies!)
+        }
+        
+        // Make a GET request to get the csrf.
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+            // Update the cookie
+            let headerFields = (response as! NSHTTPURLResponse).allHeaderFields as! [String : String]
+            let newCookies = NSHTTPCookie.cookiesWithResponseHeaderFields(headerFields, forURL: url!)
+            NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookies(newCookies, forURL: url!, mainDocumentURL: nil)
+            
+            // Get the CSRF token.
+            var csrfToken: String? = nil
+            for cookie in newCookies {
+                if cookie.name == "csrftoken" {
+                    csrfToken = cookie.value
+                    break
+                }
+            }
+            
+            if csrfToken != nil {
+                completion(csrfToken!)
+            }
+        }
+        
+        task.resume()
+    }
     
     private static func getJsonInDictFromURL(urlString: String) -> NSDictionary? {
         let url = NSURL(string: urlString)
