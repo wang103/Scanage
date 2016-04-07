@@ -254,13 +254,10 @@
                                 </constraints>
                                 <state key="normal" title="Log Out" backgroundImage="button_white"/>
                                 <state key="highlighted" backgroundImage="button_blue"/>
+                                <connections>
+                                    <action selector="logout:" destination="eb1-Qq-HuK" eventType="touchUpInside" id="ZkU-mj-Qcw"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ie1-vR-cin">
-                                <rect key="frame" x="20" y="86" width="50" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HRx-TN-tAZ">
                                 <rect key="frame" x="225" y="172" width="150" height="30"/>
                                 <constraints>
@@ -270,6 +267,16 @@
                                 <state key="normal" title="Past Messages" backgroundImage="button_white"/>
                                 <state key="highlighted" backgroundImage="button_blue"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ie1-vR-cin">
+                                <rect key="frame" x="20" y="86" width="50" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="cEq-yY-G61">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                                <color key="color" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -291,14 +298,24 @@
                             <constraint firstAttribute="leadingMargin" secondItem="Ie1-vR-cin" secondAttribute="leading" id="kgS-aM-vxE"/>
                             <constraint firstItem="7AU-de-kMQ" firstAttribute="top" secondItem="LWQ-j4-PK2" secondAttribute="bottom" constant="8" id="mhD-2e-X9W"/>
                             <constraint firstItem="eAZ-Si-eMv" firstAttribute="top" secondItem="JRe-bK-1yn" secondAttribute="bottom" constant="20" id="nbQ-Zv-Og9"/>
+                            <constraint firstItem="cEq-yY-G61" firstAttribute="centerY" secondItem="yF7-V4-jeY" secondAttribute="centerY" id="pLp-An-xOg"/>
+                            <constraint firstItem="cEq-yY-G61" firstAttribute="centerX" secondItem="yF7-V4-jeY" secondAttribute="centerX" id="qC0-m1-UGF"/>
                             <constraint firstItem="eAZ-Si-eMv" firstAttribute="centerX" secondItem="yF7-V4-jeY" secondAttribute="centerX" id="ysW-kW-3QP"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Account" image="tab3_account" id="HaD-vR-L1I"/>
+                    <connections>
+                        <outlet property="emailLabel" destination="7AU-de-kMQ" id="c7I-Qz-0sc"/>
+                        <outlet property="logoutButton" destination="eAZ-Si-eMv" id="Ghn-kv-6La"/>
+                        <outlet property="messagesButton" destination="HRx-TN-tAZ" id="NB1-DL-1iv"/>
+                        <outlet property="nameLabel" destination="JRe-bK-1yn" id="rfZ-Vy-uUr"/>
+                        <outlet property="spinner" destination="cEq-yY-G61" id="bLF-bP-MRA"/>
+                        <outlet property="usernameLabel" destination="LWQ-j4-PK2" id="kbQ-J2-uvC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpx-TX-GG4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="790"/>
+            <point key="canvasLocation" x="0.0" y="716"/>
         </scene>
         <!--Scan QR-->
         <scene sceneID="wg7-f3-ORb">

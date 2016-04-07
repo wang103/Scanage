@@ -25,6 +25,10 @@ class ServerAPIHelper {
     static let EC_EMPTY_MESSAGE      = 9
     
     
+    static func logout(completion: () -> ()) {
+        completion()
+    }
+    
     static func login(username: String, password: String, completion: NSDictionary? -> ()) {
         let toLogin = loginHelper(username, password: password, completion: completion)
         
