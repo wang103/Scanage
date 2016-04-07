@@ -32,25 +32,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdk-kt-m8B">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdk-kt-m8B">
                                 <rect key="frame" x="0.0" y="20" width="600" height="531"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jGr-UG-fiF" userLabel="NewMessageContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record a voice message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAH-1d-ra6">
-                                                <rect key="frame" x="8" y="8" width="203" height="21"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dke-tp-uO2">
-                                                <rect key="frame" x="8" y="37" width="140" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uaj-VF-xvw">
+                                                <rect key="frame" x="8" y="143" width="140" height="30"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="140" id="Ny8-23-7UL"/>
-                                                    <constraint firstAttribute="height" constant="30" id="ZvQ-7W-9Jb"/>
+                                                    <constraint firstAttribute="height" constant="30" id="Glt-g9-wtr"/>
+                                                    <constraint firstAttribute="width" constant="140" id="REi-Zw-Mnd"/>
                                                 </constraints>
-                                                <state key="normal" title="Start Recording" backgroundImage="button_white"/>
+                                                <state key="normal" title="Pick an image" backgroundImage="button_white"/>
                                                 <state key="highlighted" backgroundImage="button_blue"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eeo-D3-Vly">
@@ -62,6 +56,12 @@
                                                 <state key="normal" title="Start Playing" backgroundImage="button_white"/>
                                                 <state key="highlighted" backgroundImage="button_blue"/>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record a voice message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAH-1d-ra6">
+                                                <rect key="frame" x="8" y="8" width="203" height="21"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show an image message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWw-39-Rjf">
                                                 <rect key="frame" x="8" y="114" width="207" height="21"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -81,15 +81,6 @@
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uaj-VF-xvw">
-                                                <rect key="frame" x="8" y="143" width="140" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="Glt-g9-wtr"/>
-                                                    <constraint firstAttribute="width" constant="140" id="REi-Zw-Mnd"/>
-                                                </constraints>
-                                                <state key="normal" title="Pick an image" backgroundImage="button_white"/>
-                                                <state key="highlighted" backgroundImage="button_blue"/>
-                                            </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2aR-KW-PJV">
                                                 <rect key="frame" x="156" y="143" width="200" height="200"/>
                                                 <color key="backgroundColor" red="0.33333333333333331" green="0.47058823529411764" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -114,6 +105,22 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3f-Z5-7cW" userLabel="divider 02">
+                                                <rect key="frame" x="8" y="351" width="584" height="2"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="2" id="3Lf-3j-1rg"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dke-tp-uO2">
+                                                <rect key="frame" x="8" y="37" width="140" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="140" id="Ny8-23-7UL"/>
+                                                    <constraint firstAttribute="height" constant="30" id="ZvQ-7W-9Jb"/>
+                                                </constraints>
+                                                <state key="normal" title="Start Recording" backgroundImage="button_white"/>
+                                                <state key="highlighted" backgroundImage="button_blue"/>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Db8-Xw-iP8">
                                                 <rect key="frame" x="230" y="498" width="140" height="30"/>
                                                 <constraints>
@@ -123,13 +130,6 @@
                                                 <state key="normal" title="Submit" backgroundImage="button_white"/>
                                                 <state key="highlighted" backgroundImage="button_blue"/>
                                             </button>
-                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3f-Z5-7cW" userLabel="divider 02">
-                                                <rect key="frame" x="8" y="351" width="584" height="2"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="2" id="3Lf-3j-1rg"/>
-                                                </constraints>
-                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
