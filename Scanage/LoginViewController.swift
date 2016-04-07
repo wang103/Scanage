@@ -26,6 +26,29 @@ class LoginViewController: UIViewController {
         self.removeFromParentViewController()
     }
     
+    func getLoginInfoCompleted(result: NSDictionary?) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.stopSpinner()
+            
+            if result == nil || result!.valueForKey("success") as! Bool == false {
+                print("testIfLoggedIn failed")
+            }
+            else {
+                let fLoggedIn = result!.valueForKey("is_logged_in") as! Bool
+                if fLoggedIn {
+                    self.removeFromParent()
+                }
+            }
+        }
+    }
+    
+    func testIfLoggedIn() {
+        startSpinner()
+        
+        // Send a POST request to get login info.
+        ServerAPIHelper.getLoginInfo(getLoginInfoCompleted)
+    }
+    
     func loginCompleted(result: NSDictionary?) {
         dispatch_async(dispatch_get_main_queue()) {
             self.stopSpinner()
@@ -94,6 +117,12 @@ class LoginViewController: UIViewController {
     
     func initSpinner() {
         self.view.bringSubviewToFront(spinner)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        testIfLoggedIn()
     }
     
     override func viewDidLoad() {
