@@ -28,31 +28,30 @@ class NewMessageViewController: UIViewController {
         loginViewController!.didMoveToParentViewController(self)
     }
     
+    func getLoginInfoCompleted(result: NSDictionary?) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.spinner.stopAnimating()
+            self.spinnerMsgLabel.hidden = true
+            
+            if result == nil || result!.valueForKey("success") as! Bool == false {
+                print("testIfLoggedIn failed")
+            }
+            else {
+                let fLoggedIn = result!.valueForKey("is_logged_in") as! Bool
+                if !fLoggedIn {
+                    self.switchToLoginView()
+                }
+            }
+        }
+    }
+    
     func testIfLoggedIn() {
         self.spinnerMsgLabel.hidden = false
         self.spinnerMsgLabel.text = "checking login status..."
         spinner.startAnimating()
         
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
-        dispatch_async(queue) {
-            // Send a GET request to see if logged in.
-            let result = ServerAPIHelper.getLoginInfo()
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.spinner.stopAnimating()
-                self.spinnerMsgLabel.hidden = true
-                
-                if result == nil || result!.valueForKey("success") as! Bool == false {
-                    print("testIfLoggedIn failed")
-                }
-                else {
-                    let fLoggedIn = result!.valueForKey("is_logged_in") as! Bool
-                    if !fLoggedIn {
-                        self.switchToLoginView()
-                    }
-                }
-            }
-        }
+        // Send a POST request to get login info.
+        ServerAPIHelper.getLoginInfo(getLoginInfoCompleted)
     }
     
     override func viewWillLayoutSubviews() {
