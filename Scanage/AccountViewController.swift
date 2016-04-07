@@ -24,6 +24,7 @@ class AccountViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.stopSpinner()
             
+            // Show the login view.
             
         }
     }

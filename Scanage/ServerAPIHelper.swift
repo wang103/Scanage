@@ -25,10 +25,6 @@ class ServerAPIHelper {
     static let EC_EMPTY_MESSAGE      = 9
     
     
-    static func logout(completion: () -> ()) {
-        completion()
-    }
-    
     static func login(username: String, password: String, completion: NSDictionary? -> ()) {
         let toLogin = loginHelper(username, password: password, completion: completion)
         
@@ -37,6 +33,17 @@ class ServerAPIHelper {
         }
         else {
             ensureCookie(toLogin!)
+        }
+    }
+    
+    static func logout(completion: () -> ()) {
+        let toLogout = logoutHelper(completion)
+        
+        if toLogout == nil {
+            print("error: logoutHelper failed")
+        }
+        else {
+            ensureCookie(toLogout!)
         }
     }
     
@@ -97,6 +104,46 @@ class ServerAPIHelper {
                 }
                 
                 completion(result)
+            }
+            
+            task.resume()
+        }
+    }
+    
+    private static func logoutHelper(completion: () -> ()) -> (String -> ())? {
+        let urlString = rootURL + "logout_usr/"
+        let url = NSURL(string: urlString)
+        
+        if url == nil {
+            return nil
+        }
+        
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        
+        return { csrfToken in
+            let postString = "csrfmiddlewaretoken=" + csrfToken
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let cookiesAddr = NSURL(string: cookieURL)
+            let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)
+            if cookies != nil {
+                request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(cookies!)
+            }
+            else {
+                print("logoutHelper: about to send POST but cookie is nil")
+            }
+            
+            request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+                
+                if error != nil || data == nil {
+                    print("logoutHelper: error is present or data is absent")
+                }
+                else {
+                    completion()
+                }
             }
             
             task.resume()
