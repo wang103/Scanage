@@ -451,6 +451,9 @@
                                 </constraints>
                                 <state key="normal" title="Register" backgroundImage="button_white"/>
                                 <state key="highlighted" backgroundImage="button_blue"/>
+                                <connections>
+                                    <action selector="register:" destination="LCa-Gc-ryY" eventType="touchUpInside" id="myz-n2-ilh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -484,6 +487,7 @@
                         <outlet property="errorMsgLabel" destination="i2U-M0-aTJ" id="7zb-v0-40u"/>
                         <outlet property="loginButton" destination="Lc4-41-msl" id="wq0-vs-yb8"/>
                         <outlet property="passwordField" destination="fhH-li-YFl" id="XHg-ll-R6L"/>
+                        <outlet property="registerButton" destination="fkZ-bN-4Pd" id="Po7-6h-SVz"/>
                         <outlet property="spinner" destination="uE4-k8-9AH" id="Owz-gF-bZ6"/>
                         <outlet property="usernameField" destination="WzG-EO-c7A" id="kFj-6m-vwh"/>
                     </connections>

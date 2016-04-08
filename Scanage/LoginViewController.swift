@@ -16,8 +16,24 @@ class LoginViewController: UIViewController {
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var loginButton: UIButton!
+    @IBOutlet var registerButton: UIButton!
     
     @IBOutlet var errorMsgLabel: UILabel!
+    
+    private var registerViewController: RegisterViewController!
+    
+    
+    func switchToRegisterView() {
+        if registerViewController == nil {
+            registerViewController = storyboard?.instantiateViewControllerWithIdentifier("RegisterVC") as! RegisterViewController
+            registerViewController.view.frame = view.layer.bounds
+        }
+        
+        self.addChildViewController(registerViewController!)
+        self.view.addSubview(registerViewController!.view)
+        self.view.bringSubviewToFront(registerViewController!.view)
+        registerViewController!.didMoveToParentViewController(self)
+    }
     
     
     func removeFromParent() {
@@ -97,12 +113,17 @@ class LoginViewController: UIViewController {
         ServerAPIHelper.login(username!, password: password!, completion: loginCompleted)
     }
     
+    @IBAction func register(sender: UIButton) {
+        switchToRegisterView()
+    }
+    
     
     func startSpinner() {
         errorMsgLabel.text = ""
         usernameField.enabled = false
         passwordField.enabled = false
         loginButton.enabled = false
+        registerButton.enabled = false
         
         spinner.startAnimating()
     }
@@ -113,6 +134,7 @@ class LoginViewController: UIViewController {
         usernameField.enabled = true
         passwordField.enabled = true
         loginButton.enabled = true
+        registerButton.enabled = true
     }
     
     func initSpinner() {
@@ -126,6 +148,20 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         initSpinner()
+        
+        registerViewController = storyboard?.instantiateViewControllerWithIdentifier("RegisterVC") as! RegisterViewController
+        registerViewController.view.frame = view.layer.bounds
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+        
+        if registerViewController != nil && registerViewController.view.superview == nil {
+            registerViewController = nil
+        }
     }
 }
