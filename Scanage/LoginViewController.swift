@@ -141,6 +141,14 @@ class LoginViewController: UIViewController {
         self.view.bringSubviewToFront(spinner)
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if registerViewController != nil {
+            registerViewController.view.frame = view.layer.bounds
+        }
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
