@@ -60,7 +60,15 @@ class ServerAPIHelper {
     
     static func register(username: String, password1: String, password2: String, email: String,
                          firstName: String, lastName: String, completion: NSDictionary? -> ()) {
+        let toRegister = registerHelper(username, password1: password1, password2: password2, email: email,
+                                        firstName: firstName, lastName: lastName, completion: completion)
         
+        if toRegister == nil {
+            print("error: registerHelper failed")
+        }
+        else {
+            ensureCookie(toRegister!)
+        }
     }
     
     static func getUserInfo(completion: NSDictionary? -> ()) {
@@ -120,6 +128,58 @@ class ServerAPIHelper {
                         result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                     } catch {
                         print("loginHelper: invalid JSON")
+                        result = nil
+                    }
+                }
+                
+                completion(result)
+            }
+            
+            task.resume()
+        }
+    }
+    
+    static func registerHelper(username: String, password1: String, password2: String, email: String,
+                               firstName: String, lastName: String, completion: NSDictionary? -> ()) -> (String -> ())? {
+        
+        let urlString = rootURL + "register_new_usr/"
+        let url = NSURL(string: urlString)
+        
+        if url == nil {
+            return nil
+        }
+        
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        
+        return { csrfToken in
+            let postString = "username=" + username + "&password=" + password1 + "&password_copy=" + password2 +
+                "&email=" + email + "&first_name=" + firstName + "&last_name=" + lastName + "&csrfmiddlewaretoken=" + csrfToken
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let cookiesAddr = NSURL(string: cookieURL)
+            let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)
+            if cookies != nil {
+                request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(cookies!)
+            }
+            else {
+                print("registerHelper: about to send POST but cookie is nil")
+            }
+            
+            request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+                var result: NSDictionary? = nil
+                
+                if error != nil || data == nil {
+                    print("registerHelper: error is present or data is absent")
+                    result = nil
+                }
+                else {
+                    do {
+                        result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    } catch {
+                        print("registerHelper: invalid JSON")
                         result = nil
                     }
                 }

@@ -25,10 +25,14 @@ class RegisterViewController: UIViewController {
     @IBOutlet var submitButton: UIButton!
     
     
-    @IBAction func removeFromParent(sender: UIBarButtonItem) {
+    private func removeFromParentHelper() {
         self.willMoveToParentViewController(nil)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
+    }
+    
+    @IBAction func removeFromParent(sender: UIBarButtonItem) {
+        self.removeFromParentHelper()
     }
     
     @IBAction func register(sender: UIButton) {
@@ -80,7 +84,52 @@ class RegisterViewController: UIViewController {
     }
     
     func registerCompleted(result: NSDictionary?) {
-        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.stopSpinner()
+            
+            if result == nil {
+                print("Register failed")
+            }
+            else if result!.valueForKey("success") as! Bool == false {
+                let ec = result!.valueForKey("ec") as! Int
+                
+                if ec == ServerAPIHelper.EC_INVALID_USERNAME {
+                    self.errorMsgLabel.text = "Invalid username"
+                }
+                else if ec == ServerAPIHelper.EC_INVALID_PASSWORD {
+                    self.errorMsgLabel.text = "Invalid password"
+                }
+                else if ec == ServerAPIHelper.EC_PASSWORDS_MISMATCH {
+                    self.errorMsgLabel.text = "Passwords do not match"
+                }
+                else if ec == ServerAPIHelper.EC_INVALID_EMAIL {
+                    self.errorMsgLabel.text = "Invalid email"
+                }
+                else if ec == ServerAPIHelper.EC_USERNAME_EXISTS {
+                    self.errorMsgLabel.text = "Username already exists"
+                }
+                else {
+                    self.errorMsgLabel.text = "Registration error"
+                }
+                
+                return
+            }
+            else {
+                // Successfully registered.
+                let userInfo = result!.valueForKey("usr_detail") as! NSDictionary
+                let username = userInfo.valueForKey("username") as! String
+                
+                let msg = "Please login using your username \(username) and password"
+                
+                let alertController = UIAlertController(title: "Registration succeeded", message: msg, preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                self.removeFromParentHelper()
+            }
+        }
     }
     
     
