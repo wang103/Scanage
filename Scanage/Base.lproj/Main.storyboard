@@ -130,6 +130,15 @@
                                                 <state key="normal" title="Submit" backgroundImage="button_white"/>
                                                 <state key="highlighted" backgroundImage="button_blue"/>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfx-YO-wzq">
+                                                <rect key="frame" x="8" y="181" width="140" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="140" id="FLk-Zt-u1K"/>
+                                                    <constraint firstAttribute="height" constant="30" id="Yn4-YW-EGs"/>
+                                                </constraints>
+                                                <state key="normal" title="Clear image" backgroundImage="button_white"/>
+                                                <state key="highlighted" backgroundImage="button_blue"/>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -156,7 +165,9 @@
                                             <constraint firstItem="zxP-Bp-OM1" firstAttribute="leading" secondItem="jGr-UG-fiF" secondAttribute="leading" constant="8" id="jTn-xe-TlJ"/>
                                             <constraint firstItem="Dke-tp-uO2" firstAttribute="top" secondItem="eAH-1d-ra6" secondAttribute="bottom" constant="8" id="lWe-sT-2HF"/>
                                             <constraint firstItem="zxP-Bp-OM1" firstAttribute="top" secondItem="Dke-tp-uO2" secondAttribute="bottom" constant="8" id="oT6-K5-HGY"/>
+                                            <constraint firstItem="cfx-YO-wzq" firstAttribute="leading" secondItem="jGr-UG-fiF" secondAttribute="leading" constant="8" id="qsw-Nd-6oA"/>
                                             <constraint firstItem="Eeo-D3-Vly" firstAttribute="top" secondItem="Dke-tp-uO2" secondAttribute="top" id="sry-7S-fug"/>
+                                            <constraint firstItem="cfx-YO-wzq" firstAttribute="top" secondItem="uaj-VF-xvw" secondAttribute="bottom" constant="8" id="svB-8n-TH4"/>
                                             <constraint firstItem="2aR-KW-PJV" firstAttribute="top" secondItem="uaj-VF-xvw" secondAttribute="top" id="swV-Ev-MQV"/>
                                             <constraint firstItem="Db8-Xw-iP8" firstAttribute="top" secondItem="g1R-q3-2t7" secondAttribute="bottom" constant="8" id="t0j-j7-owR"/>
                                             <constraint firstItem="eAH-1d-ra6" firstAttribute="leading" secondItem="jGr-UG-fiF" secondAttribute="leading" constant="8" id="uov-pn-iO1"/>
@@ -194,7 +205,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="-320"/>
+            <point key="canvasLocation" x="750" y="-320.25"/>
         </scene>
         <!--Account-->
         <scene sceneID="E6F-mA-SVB">
