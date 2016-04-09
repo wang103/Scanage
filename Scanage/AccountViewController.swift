@@ -86,7 +86,7 @@ class AccountViewController: UIViewController {
         let yesAction = UIAlertAction(title: "Yes, log me out",
                                       style: .Destructive, handler: { action in
             self.startSpinner()
-                                        
+            
             // Send a POST request to log out.
             ServerAPIHelper.logout(self.logoutCompleted)
         })

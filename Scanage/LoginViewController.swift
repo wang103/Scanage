@@ -89,6 +89,10 @@ class LoginViewController: UIViewController {
             }
             else {
                 // Successfully logged in.
+                if let accountVC = self.parentViewController as? AccountViewController {
+                    accountVC.displayUserInfo()
+                }
+                
                 self.removeFromParent()
             }
         }
