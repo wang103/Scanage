@@ -58,6 +58,11 @@ class ServerAPIHelper {
         }
     }
     
+    static func register(username: String, password1: String, password2: String, email: String,
+                         firstName: String, lastName: String, completion: NSDictionary? -> ()) {
+        
+    }
+    
     static func getUserInfo(completion: NSDictionary? -> ()) {
         let toGetUserInfo = getUserInfoHelper(completion)
         

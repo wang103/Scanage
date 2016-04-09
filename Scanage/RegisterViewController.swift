@@ -72,6 +72,40 @@ class RegisterViewController: UIViewController {
             NSCharacterSet.whitespaceAndNewlineCharacterSet()
         )
         
+        self.startSpinner()
         
+        // Send a POST request to register.
+        ServerAPIHelper.register(username!, password1: password1!, password2: password2!, email: email!,
+                                 firstName: firstName!, lastName: lastName!, completion: registerCompleted)
+    }
+    
+    func registerCompleted(result: NSDictionary?) {
+        
+    }
+    
+    
+    func startSpinner() {
+        errorMsgLabel.text = ""
+        usernameField.enabled = false
+        password1Field.enabled = false
+        password2Field.enabled = false
+        emailField.enabled = false
+        firstnameField.enabled = false
+        lastnameField.enabled = false
+        submitButton.enabled = false
+        
+        spinner.startAnimating()
+    }
+    
+    func stopSpinner() {
+        spinner.stopAnimating()
+        
+        usernameField.enabled = true
+        password1Field.enabled = true
+        password2Field.enabled = true
+        emailField.enabled = true
+        firstnameField.enabled = true
+        lastnameField.enabled = true
+        submitButton.enabled = true
     }
 }
