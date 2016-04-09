@@ -652,6 +652,15 @@
                             <constraint firstItem="a1j-zE-8Bv" firstAttribute="top" secondItem="QKv-Cr-Igl" secondAttribute="bottom" constant="20" id="wmD-Qo-ObW"/>
                             <constraint firstItem="sA8-hL-zTg" firstAttribute="top" secondItem="dC6-xv-o8s" secondAttribute="bottom" id="zoR-yJ-7AL"/>
                         </constraints>
+                        <variation key="heightClass=regular">
+                            <mask key="constraints">
+                                <include reference="40K-MM-rcc"/>
+                                <include reference="CXv-b9-FgY"/>
+                                <include reference="Dgf-OO-7OW"/>
+                                <include reference="9za-JF-1Ps"/>
+                                <include reference="bRB-uO-oMl"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="emailField" destination="LUQ-CC-YsS" id="Eyc-Zz-CQl"/>
