@@ -13,6 +13,17 @@ class NewMessageViewController: UIViewController {
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var spinnerMsgLabel: UILabel!
     
+    @IBOutlet var recordingButton: UIButton!
+    @IBOutlet var playingButton: UIButton!
+    @IBOutlet var voiceInfoLabel: UILabel!
+    
+    @IBOutlet var pickImageButton: UIButton!
+    @IBOutlet var clearImageButton: UIButton!
+    @IBOutlet var imageView: UIImageView!
+    
+    @IBOutlet var textView: UITextView!
+    @IBOutlet var submitButton: UIButton!
+    
     private var loginViewController: LoginViewController!
     
     

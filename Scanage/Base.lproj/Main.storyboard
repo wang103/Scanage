@@ -199,8 +199,16 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="New Message" image="tab1_new" id="acW-dT-cKf"/>
                     <connections>
+                        <outlet property="clearImageButton" destination="cfx-YO-wzq" id="Cby-uE-vzw"/>
+                        <outlet property="imageView" destination="2aR-KW-PJV" id="ysg-Do-6Oj"/>
+                        <outlet property="pickImageButton" destination="uaj-VF-xvw" id="OdQ-j9-F3l"/>
+                        <outlet property="playingButton" destination="Eeo-D3-Vly" id="FHQ-2y-CMB"/>
+                        <outlet property="recordingButton" destination="Dke-tp-uO2" id="YrD-BU-j8v"/>
                         <outlet property="spinner" destination="qWQ-xK-Ldl" id="JK6-as-YCn"/>
                         <outlet property="spinnerMsgLabel" destination="Nlc-wV-DL4" id="7jd-cw-xXr"/>
+                        <outlet property="submitButton" destination="Db8-Xw-iP8" id="Fbf-ag-odS"/>
+                        <outlet property="textView" destination="g1R-q3-2t7" id="3O4-9r-xG8"/>
+                        <outlet property="voiceInfoLabel" destination="zxP-Bp-OM1" id="iOC-Or-qHT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
