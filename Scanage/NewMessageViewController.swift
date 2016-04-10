@@ -39,8 +39,41 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
     }
     
-    func initAudioRecorder() {
+    func initAudioRecorder() -> Bool {
+        let documentsURL = NSFileManager.defaultManager()
+            .URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        let voiceMsgFileURL = documentsURL.URLByAppendingPathComponent("voice_msg.caf")
         
+        let recordSettings = [
+            AVEncoderAudioQualityKey: AVAudioQuality.Medium.rawValue,
+            AVEncoderBitRateKey: 16,
+            AVNumberOfChannelsKey: 2,
+            AVSampleRateKey: 44100.0
+        ]
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            self.audioRecorder = try AVAudioRecorder(URL: voiceMsgFileURL, settings: recordSettings as! [String : AnyObject])
+            if self.audioRecorder!.prepareToRecord() == false {
+                struct Error: ErrorType {
+                    var msg = "Unable to prepare audio recorder"
+                }
+                throw Error()
+            }
+        }
+        catch {
+            // Show error message
+            let alert = UIAlertController(title: "Device Error", message: "Please enable recording for this app in Settings.",
+                                          preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            return false
+        }
+        
+        return true
     }
     
     
@@ -109,7 +142,9 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         super.viewDidLoad()
 
         initSpinner()
-        initAudioRecorder()
+        if initAudioRecorder() == false {
+            recordingButton.enabled = false
+        }
         
         loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
         loginViewController.view.frame = view.layer.bounds
