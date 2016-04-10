@@ -27,6 +27,15 @@ class NewMessageViewController: UIViewController {
     private var loginViewController: LoginViewController!
     
     
+    @IBAction func recordButtonPressed() {
+        
+    }
+    
+    @IBAction func playButtonPressed() {
+        
+    }
+    
+    
     func switchToLoginView() {
         if loginViewController == nil {
             loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController

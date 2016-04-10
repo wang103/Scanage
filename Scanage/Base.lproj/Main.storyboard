@@ -55,6 +55,9 @@
                                                 </constraints>
                                                 <state key="normal" title="Start Playing" backgroundImage="button_white"/>
                                                 <state key="highlighted" backgroundImage="button_blue"/>
+                                                <connections>
+                                                    <action selector="playButtonPressed" destination="9pv-A4-QxB" eventType="touchUpInside" id="IKy-LP-6uO"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record a voice message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAH-1d-ra6">
                                                 <rect key="frame" x="8" y="8" width="203" height="21"/>
@@ -120,6 +123,9 @@
                                                 </constraints>
                                                 <state key="normal" title="Start Recording" backgroundImage="button_white"/>
                                                 <state key="highlighted" backgroundImage="button_blue"/>
+                                                <connections>
+                                                    <action selector="recordButtonPressed" destination="9pv-A4-QxB" eventType="touchUpInside" id="srz-OX-la8"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Db8-Xw-iP8">
                                                 <rect key="frame" x="230" y="498" width="140" height="30"/>
