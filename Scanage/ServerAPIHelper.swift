@@ -58,6 +58,17 @@ class ServerAPIHelper {
         }
     }
     
+    static func submitNewMsg(completion: NSDictionary? -> ()) {
+        let toSubmitNewMsg = submitNewMsgHelper(completion)
+        
+        if toSubmitNewMsg == nil {
+            print("error: submitNewMsgHelper failed")
+        }
+        else {
+            ensureCookie(toSubmitNewMsg!)
+        }
+    }
+    
     static func register(username: String, password1: String, password2: String, email: String,
                          firstName: String, lastName: String, completion: NSDictionary? -> ()) {
         let toRegister = registerHelper(username, password1: password1, password2: password2, email: email,
@@ -89,6 +100,11 @@ class ServerAPIHelper {
     }
     
     /*** private helper methods ***/
+    
+    private static func submitNewMsgHelper(completion: NSDictionary? -> ()) -> (String -> ())? {
+        
+        return nil
+    }
     
     private static func loginHelper(username: String, password: String, completion: NSDictionary? -> ()) -> (String -> ())? {
         let urlString = rootURL + "login_usr/"

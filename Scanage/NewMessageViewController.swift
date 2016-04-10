@@ -34,6 +34,30 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     private var loginViewController: LoginViewController!
     
     
+    func submitMsgCompleted(result: NSDictionary?) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.stopSpinner()
+            
+            if result == nil {
+                print("submit new message failed")
+            }
+            else {
+                // Message submitted successfully.
+                print()
+            }
+        }
+    }
+    
+    @IBAction func submitMessage(sender: UIButton) {
+        
+        
+        self.startSpinner()
+        
+        // Send a POST to request to submit new message.
+        ServerAPIHelper.submitNewMsg(submitMsgCompleted)
+    }
+    
+    
     @IBAction func pickImage(sender: UIButton) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
@@ -226,6 +250,32 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         if loginViewController == nil || loginViewController.view.superview == nil {
             testIfLoggedIn()
         }
+    }
+    
+    private var playingButtonState: Bool = false
+    
+    func startSpinner() {
+        spinnerMsgLabel.text = ""
+        recordingButton.enabled = false
+        playingButtonState = playingButton.enabled
+        playingButton.enabled = false
+        pickImageButton.enabled = false
+        clearImageButton.enabled = false
+        textView.editable = false
+        submitButton.enabled = false
+        
+        spinner.startAnimating()
+    }
+    
+    func stopSpinner() {
+        self.spinner.stopAnimating()
+        
+        recordingButton.enabled = true
+        playingButton.enabled = playingButtonState
+        pickImageButton.enabled = true
+        clearImageButton.enabled = imageView.image != nil
+        textView.editable = true
+        submitButton.enabled = true
     }
     
     func initSpinner() {
