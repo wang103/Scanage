@@ -38,6 +38,12 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+        recordingButton.enabled = true
+        playingButton.setTitle("Start Playing", forState: .Normal)
+        submitButton.enabled = true
+    }
+    
     @IBAction func recordButtonPressed(sender: UIButton) {
         if audioRecorder!.recording == true {
             // Recording -> not recording
