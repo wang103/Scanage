@@ -43,10 +43,18 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             // Recording -> not recording
             recordingButton.setTitle("Start Recording", forState: .Normal)
             playingButton.enabled = true
-            voiceInfoLabel.text = ""
             submitButton.enabled = true
             
             audioRecorder!.stop()
+            
+            // Show recorded audio info.
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOfURL: audioRecorder!.url)
+                voiceInfoLabel.text = "Recorded length: \(Int(audioPlayer!.duration)) seconds"
+            }
+            catch {
+                print("Error: something is wrong with audio player")
+            }
         }
         else {
             // Not recording -> recording
@@ -63,7 +71,33 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     @IBAction func playButtonPressed(sender: UIButton) {
+        if audioRecorder?.recording == true {
+            return
+        }
         
+        if audioPlayer?.playing == true {
+            // Playing -> not playing
+            recordingButton.enabled = true
+            playingButton.setTitle("Start Playing", forState: .Normal)
+            submitButton.enabled = true
+            
+            audioPlayer!.stop()
+        }
+        else {
+            // Not playing -> playing
+            recordingButton.enabled = false
+            playingButton.setTitle("Stop Playing", forState: .Normal)
+            submitButton.enabled = false
+            
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOfURL: audioRecorder!.url)
+                audioPlayer!.delegate = self
+                audioPlayer!.play()
+            }
+            catch {
+                print("Error: something is wrong with audio player")
+            }
+        }
     }
     
     func initAudioRecorder() -> Bool {
