@@ -31,11 +31,38 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     private var loginViewController: LoginViewController!
     
     
-    @IBAction func recordButtonPressed() {
-        
+    private func showRecorderError() {
+        let alert = UIAlertController(title: "Device Error", message: "Please enable recording for this app in Settings.",
+                                      preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    @IBAction func playButtonPressed() {
+    @IBAction func recordButtonPressed(sender: UIButton) {
+        if audioRecorder!.recording == true {
+            // Recording -> not recording
+            recordingButton.setTitle("Start Recording", forState: .Normal)
+            playingButton.enabled = true
+            voiceInfoLabel.text = ""
+            submitButton.enabled = true
+            
+            audioRecorder!.stop()
+        }
+        else {
+            // Not recording -> recording
+            recordingButton.setTitle("Stop Recording", forState: .Normal)
+            playingButton.setTitle("Start Playing", forState: .Normal)
+            playingButton.enabled = false
+            voiceInfoLabel.text = "Recording..."
+            submitButton.enabled = false
+            
+            if audioRecorder!.record() == false {
+                showRecorderError()
+            }
+        }
+    }
+    
+    @IBAction func playButtonPressed(sender: UIButton) {
         
     }
     
@@ -65,10 +92,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         }
         catch {
             // Show error message
-            let alert = UIAlertController(title: "Device Error", message: "Please enable recording for this app in Settings.",
-                                          preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            showRecorderError()
             
             return false
         }
