@@ -9,7 +9,8 @@
 import UIKit
 import AVFoundation
 
-class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
+class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate,
+    UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var spinnerMsgLabel: UILabel!
@@ -28,7 +29,35 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     private var audioPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
     
+    private let imagePicker = UIImagePickerController()
+    
     private var loginViewController: LoginViewController!
+    
+    
+    @IBAction func pickImage(sender: UIButton) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func clearImage(sender: UIButton) {
+        clearImageButton.enabled = false
+        imageView.image = nil
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imageView.image = pickedImage
+            clearImageButton.enabled = true
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     
     private func showRecorderError() {
@@ -214,6 +243,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         if initAudioRecorder() == false {
             recordingButton.enabled = false
         }
+        
+        imagePicker.delegate = self
         
         loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
         loginViewController.view.frame = view.layer.bounds
