@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class NewMessageViewController: UIViewController {
+class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
 
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var spinnerMsgLabel: UILabel!
@@ -24,6 +25,9 @@ class NewMessageViewController: UIViewController {
     @IBOutlet var textView: UITextView!
     @IBOutlet var submitButton: UIButton!
     
+    private var audioPlayer: AVAudioPlayer?
+    private var audioRecorder: AVAudioRecorder?
+    
     private var loginViewController: LoginViewController!
     
     
@@ -32,6 +36,10 @@ class NewMessageViewController: UIViewController {
     }
     
     @IBAction func playButtonPressed() {
+        
+    }
+    
+    func initAudioRecorder() {
         
     }
     
@@ -101,6 +109,7 @@ class NewMessageViewController: UIViewController {
         super.viewDidLoad()
 
         initSpinner()
+        initAudioRecorder()
         
         loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
         loginViewController.view.frame = view.layer.bounds
