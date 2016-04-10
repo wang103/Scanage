@@ -122,6 +122,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try audioSession.overrideOutputAudioPort(.Speaker)
             self.audioRecorder = try AVAudioRecorder(URL: voiceMsgFileURL, settings: recordSettings as! [String : AnyObject])
             if self.audioRecorder!.prepareToRecord() == false {
                 struct Error: ErrorType {
