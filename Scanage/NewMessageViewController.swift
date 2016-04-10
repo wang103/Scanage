@@ -56,7 +56,10 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             // Show recorded audio info.
             do {
                 audioPlayer = try AVAudioPlayer(contentsOfURL: audioRecorder!.url)
-                voiceInfoLabel.text = "Recorded length: \(Int(audioPlayer!.duration)) seconds"
+                let attributes = try NSFileManager.defaultManager().attributesOfItemAtPath(audioRecorder!.url.path!)
+                let fileSize = Float((attributes[NSFileSize] as! NSNumber).longLongValue) / 1048576.0
+                let fileSizeStr = String(format: "%.2f", fileSize)
+                voiceInfoLabel.text = "Length: \(Int(audioPlayer!.duration)) seconds. Size: \(fileSizeStr) MB."
             }
             catch {
                 print("Error: something is wrong with audio player")
@@ -109,12 +112,13 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     func initAudioRecorder() -> Bool {
         let documentsURL = NSFileManager.defaultManager()
             .URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-        let voiceMsgFileURL = documentsURL.URLByAppendingPathComponent("voice_msg.caf")
+        let voiceMsgFileURL = documentsURL.URLByAppendingPathComponent("voice_msg.m4a")
         
         let recordSettings = [
             AVEncoderAudioQualityKey: AVAudioQuality.Medium.rawValue,
-            AVEncoderBitRateKey: 16,
-            AVNumberOfChannelsKey: 2,
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVEncoderBitRateKey: 128000,
+            AVNumberOfChannelsKey: 1,
             AVSampleRateKey: 44100.0
         ]
         
