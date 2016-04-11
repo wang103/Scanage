@@ -286,6 +286,10 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         self.view.bringSubviewToFront(spinnerMsgLabel)
     }
     
+    func tap(gesture: UITapGestureRecognizer) {
+        textView.resignFirstResponder()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -294,12 +298,32 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             recordingButton.enabled = false
         }
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewMessageViewController.tap(_:)))
+        view.addGestureRecognizer(tapGesture)
+        
         imagePicker.delegate = self
         
         loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
         loginViewController.view.frame = view.layer.bounds
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewMessageViewController.keyboardWillShow(_:)),
+                                                         name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewMessageViewController.keyboardWillHide(_:)),
+                                                         name: UIKeyboardWillHideNotification, object: nil)
     }
-
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            if self.view.frame.origin.y != -keyboardSize.height {
+                self.view.frame.origin.y = -keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

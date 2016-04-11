@@ -101,6 +101,10 @@ class ServerAPIHelper {
     
     /*** private helper methods ***/
     
+    private static func generateBoundaryString() -> String {
+        return "Boundary-\(NSUUID().UUIDString)"
+    }
+    
     private static func submitNewMsgHelper(completion: NSDictionary? -> ()) -> (String -> ())? {
         
         return nil
