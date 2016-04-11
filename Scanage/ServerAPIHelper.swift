@@ -117,7 +117,6 @@ class ServerAPIHelper {
         
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         return { csrfToken in
             var postString = "csrfmiddlewaretoken=" + csrfToken
@@ -135,6 +134,7 @@ class ServerAPIHelper {
                 print("submitNewMsgHelper: about to send POST but cookie is nil")
             }
             
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
             request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
             
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
@@ -146,10 +146,6 @@ class ServerAPIHelper {
                 }
                 else {
                     do {
-                        let dataString = String(data: data!, encoding: NSUTF8StringEncoding)
-                        print(dataString)
-                        
-                        
                         result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                     } catch {
                         print("submitNewMsgHelper: invalid JSON")
