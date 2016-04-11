@@ -41,20 +41,44 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             if result == nil {
                 print("submit new message failed")
             }
+            else if result!.valueForKey("success") as! Bool == false {
+                let ec = result!.valueForKey("ec") as! Int
+                
+                var msg = ""
+                
+                if ec == ServerAPIHelper.EC_NOT_LOGGED_IN {
+                    msg = "Please log in before submitting a new message"
+                    self.switchToLoginView()
+                }
+                else if ec == ServerAPIHelper.EC_EMPTY_MESSAGE {
+                    msg = "Message cannot be empty"
+                }
+                else {
+                    msg = "Server error"
+                }
+                
+                let alertController = UIAlertController(title: "Error", message: msg, preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                return
+            }
             else {
                 // Message submitted successfully.
-                print()
+                print("New message submitted")
             }
         }
     }
     
     @IBAction func submitMessage(sender: UIButton) {
-        
+        let textMsg = self.textView.text
         
         self.startSpinner()
         
         // Send a POST to request to submit new message.
-        ServerAPIHelper.submitNewMsg(submitMsgCompleted)
+        ServerAPIHelper.submitNewMsg(textMsg, completion: submitMsgCompleted)
     }
     
     

@@ -58,8 +58,8 @@ class ServerAPIHelper {
         }
     }
     
-    static func submitNewMsg(completion: NSDictionary? -> ()) {
-        let toSubmitNewMsg = submitNewMsgHelper(completion)
+    static func submitNewMsg(textMsg: String, completion: NSDictionary? -> ()) {
+        let toSubmitNewMsg = submitNewMsgHelper(textMsg, completion: completion)
         
         if toSubmitNewMsg == nil {
             print("error: submitNewMsgHelper failed")
@@ -105,9 +105,63 @@ class ServerAPIHelper {
         return "Boundary-\(NSUUID().UUIDString)"
     }
     
-    private static func submitNewMsgHelper(completion: NSDictionary? -> ()) -> (String -> ())? {
+    private static func submitNewMsgHelper(textMsg: String, completion: NSDictionary? -> ()) -> (String -> ())? {
+        let urlString = rootURL + "submit_new_msg/"
+        let url = NSURL(string: urlString)
         
-        return nil
+        if url == nil {
+            return nil
+        }
+        
+        let boundary = generateBoundaryString()
+        
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        return { csrfToken in
+            var postString = "csrfmiddlewaretoken=" + csrfToken
+            if textMsg.isEmpty == false {
+                postString += ("&msg_text=" + textMsg)
+            }
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let cookiesAddr = NSURL(string: cookieURL)
+            let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)
+            if cookies != nil {
+                request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(cookies!)
+            }
+            else {
+                print("submitNewMsgHelper: about to send POST but cookie is nil")
+            }
+            
+            request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+                var result: NSDictionary? = nil
+                
+                if error != nil || data == nil {
+                    print("submitNewMsgHelper: error is present or data is absent")
+                    result = nil
+                }
+                else {
+                    do {
+                        let dataString = String(data: data!, encoding: NSUTF8StringEncoding)
+                        print(dataString)
+                        
+                        
+                        result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    } catch {
+                        print("submitNewMsgHelper: invalid JSON")
+                        result = nil
+                    }
+                }
+                
+                completion(result)
+            }
+            
+            task.resume()
+        }
     }
     
     private static func loginHelper(username: String, password: String, completion: NSDictionary? -> ()) -> (String -> ())? {
