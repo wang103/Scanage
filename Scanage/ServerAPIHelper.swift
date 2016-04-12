@@ -66,8 +66,8 @@ class ServerAPIHelper {
         }
     }
     
-    static func submitNewMsg(textMsg: String, completion: NSDictionary? -> ()) {
-        let toSubmitNewMsg = submitNewMsgHelper(textMsg, completion: completion)
+    static func submitNewMsg(textMsg: String, fileKeys: [String]?, urls: [NSURL]?, completion: NSDictionary? -> ()) {
+        let toSubmitNewMsg = submitNewMsgHelper(textMsg, fileKeys: fileKeys, urls: urls, completion: completion)
         
         if toSubmitNewMsg == nil {
             print("error: submitNewMsgHelper failed")
@@ -159,7 +159,8 @@ class ServerAPIHelper {
         return body
     }
     
-    private static func submitNewMsgHelper(textMsg: String, completion: NSDictionary? -> ()) -> (String -> ())? {
+    private static func submitNewMsgHelper(textMsg: String, fileKeys: [String]?, urls: [NSURL]?,
+                                           completion: NSDictionary? -> ()) -> (String -> ())? {
         let urlString = rootURL + "submit_new_msg/"
         let url = NSURL(string: urlString)
         
@@ -181,7 +182,7 @@ class ServerAPIHelper {
                 postParams["msg_text"] = textMsg
             }
             
-            request.HTTPBody = createBodyWithParameters(postParams, fileKeys: nil, urls: nil, boundary: boundary)
+            request.HTTPBody = createBodyWithParameters(postParams, fileKeys: fileKeys, urls: urls, boundary: boundary)
             
             let cookiesAddr = NSURL(string: cookieURL)
             let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)

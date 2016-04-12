@@ -73,12 +73,34 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     @IBAction func submitMessage(sender: UIButton) {
+        var fileKeys: [String] = []
+        var urls: [NSURL] = []
+        
+        let voiceMsgUrl = audioRecorder?.url
+        if voiceMsgUrl != nil {
+            let fileManager = NSFileManager.defaultManager()
+            if fileManager.fileExistsAtPath(voiceMsgUrl!.path!) {
+                fileKeys.append("audio_file")
+                urls.append(voiceMsgUrl!)
+            }
+        }
+        
+        if imageView.image != nil {
+            let fileManager = NSFileManager.defaultManager()
+            let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let imgMsgFileURL = documentsURL.URLByAppendingPathComponent("image_msg.jpg")
+            UIImageJPEGRepresentation(imageView.image!, 1.0)?.writeToURL(imgMsgFileURL, atomically: true)
+            
+            fileKeys.append("image_file")
+            urls.append(imgMsgFileURL)
+        }
+        
         let textMsg = self.textView.text
         
         self.startSpinner()
         
         // Send a POST to request to submit new message.
-        ServerAPIHelper.submitNewMsg(textMsg, completion: submitMsgCompleted)
+        ServerAPIHelper.submitNewMsg(textMsg, fileKeys: fileKeys, urls: urls, completion: submitMsgCompleted)
     }
     
     
@@ -187,9 +209,19 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     func initAudioRecorder() -> Bool {
-        let documentsURL = NSFileManager.defaultManager()
-            .URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        let fileManager = NSFileManager.defaultManager()
+        
+        let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         let voiceMsgFileURL = documentsURL.URLByAppendingPathComponent("voice_msg.m4a")
+        
+        if fileManager.fileExistsAtPath(voiceMsgFileURL.path!) {
+            do {
+                try fileManager.removeItemAtURL(voiceMsgFileURL)
+            }
+            catch {
+                print("Error: removing audio file failed")
+            }
+        }
         
         let recordSettings = [
             AVEncoderAudioQualityKey: AVAudioQuality.Medium.rawValue,
