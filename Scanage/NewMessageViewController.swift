@@ -18,6 +18,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     @IBOutlet var recordingButton: UIButton!
     @IBOutlet var playingButton: UIButton!
     @IBOutlet var voiceInfoLabel: UILabel!
+    private var recorded: Bool = false
     
     @IBOutlet var pickImageButton: UIButton!
     @IBOutlet var clearImageButton: UIButton!
@@ -77,7 +78,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         var urls: [NSURL] = []
         
         let voiceMsgUrl = audioRecorder?.url
-        if voiceMsgUrl != nil {
+        if recorded && voiceMsgUrl != nil {
             let fileManager = NSFileManager.defaultManager()
             if fileManager.fileExistsAtPath(voiceMsgUrl!.path!) {
                 fileKeys.append("audio_file")
@@ -159,6 +160,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
                 let fileSize = Float((attributes[NSFileSize] as! NSNumber).longLongValue) / 1048576.0
                 let fileSizeStr = String(format: "%.2f", fileSize)
                 voiceInfoLabel.text = "Length: \(Int(audioPlayer!.duration)) seconds. Size: \(fileSizeStr) MB."
+                
+                recorded = true
             }
             catch {
                 print("Error: something is wrong with audio player")
@@ -222,6 +225,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
                 print("Error: removing audio file failed")
             }
         }
+        
+        recorded = false
         
         let recordSettings = [
             AVEncoderAudioQualityKey: AVAudioQuality.Medium.rawValue,
