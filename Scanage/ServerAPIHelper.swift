@@ -7,6 +7,14 @@
 //
 
 import Foundation
+import MobileCoreServices
+
+extension NSMutableData {
+    func appendString(string: String) {
+        let data = string.dataUsingEncoding(NSUTF8StringEncoding)
+        appendData(data!)
+    }
+}
 
 class ServerAPIHelper {
     
@@ -105,6 +113,52 @@ class ServerAPIHelper {
         return "Boundary-\(NSUUID().UUIDString)"
     }
     
+    private static func mimeTypeForUrl(url: NSURL) -> String {
+        let ext = url.pathExtension
+        
+        if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext! as NSString, nil)?.takeRetainedValue() {
+            if let mimeType = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
+                return mimeType as String
+            }
+        }
+        
+        return "application/octet-stream"
+    }
+    
+    private static func createBodyWithParameters(parameters: [String: String]?, fileKeys: [String]?,
+                                                 urls: [NSURL]?, boundary: String) -> NSData {
+        let body = NSMutableData()
+        
+        if parameters != nil {
+            for (key, val) in parameters! {
+                body.appendString("--\(boundary)\r\n")
+                body.appendString("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+                body.appendString("\(val)\r\n")
+            }
+        }
+        
+        if urls != nil {
+            var counter = 0
+            
+            for url in urls! {
+                let filename = url.lastPathComponent
+                let data = NSData(contentsOfURL: url)!
+                let mimeType = mimeTypeForUrl(url)
+                
+                body.appendString("--\(boundary)\r\n")
+                body.appendString("Content-Disposition: form-data; name=\"\(fileKeys![counter])\"; filename=\"\(filename!)\"\r\n")
+                body.appendString("Content-Type: \(mimeType)\r\n\r\n")
+                body.appendData(data)
+                body.appendString("\r\n")
+                
+                counter += 1
+            }
+        }
+        
+        body.appendString("--\(boundary)--\r\n")
+        return body
+    }
+    
     private static func submitNewMsgHelper(textMsg: String, completion: NSDictionary? -> ()) -> (String -> ())? {
         let urlString = rootURL + "submit_new_msg/"
         let url = NSURL(string: urlString)
@@ -119,11 +173,15 @@ class ServerAPIHelper {
         request.HTTPMethod = "POST"
         
         return { csrfToken in
-            var postString = "csrfmiddlewaretoken=" + csrfToken
+            
+            var postParams = [
+                "csrfmiddlewaretoken": csrfToken
+            ]
             if textMsg.isEmpty == false {
-                postString += ("&msg_text=" + textMsg)
+                postParams["msg_text"] = textMsg
             }
-            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            request.HTTPBody = createBodyWithParameters(postParams, fileKeys: nil, urls: nil, boundary: boundary)
             
             let cookiesAddr = NSURL(string: cookieURL)
             let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)
