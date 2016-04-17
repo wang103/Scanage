@@ -58,7 +58,13 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
                 self.spinner.stopAnimating()
                 
                 if result == nil || result!.valueForKey("success") as! Bool == false {
-                    print("qrCodeCaptured failed")
+                    // QR code is not a Scanage QR.
+                    
+                    let alert = UIAlertController(title: "Invalid QR code", message: "This is not a QR code created by this app.",
+                                                  preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel,
+                                                  handler: {(alert: UIAlertAction!) in self.startCaptureSession()}))
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
                 else {
                     self.switchToMsgDetailsView(result!)
