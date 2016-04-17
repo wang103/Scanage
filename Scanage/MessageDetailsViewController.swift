@@ -38,6 +38,19 @@ class MessageDetailsViewController: UIViewController {
         self.creatorField.text = fieldsDataDict.valueForKey("creator") as? String
         self.dateField.text = fieldsDataDict.valueForKey("create_date") as? String
         
+        if let imageURLStr = fieldsDataDict["image_file"] {
+            imageMsgErrorLabel.text = ""
+            
+            if let url = NSURL(string: imageURLStr as! String) {
+                if let data = NSData(contentsOfURL: url) {
+                    imageView.image = UIImage(data: data)
+                }
+            }
+        }
+        else {
+            imageMsgErrorLabel.text = "empty"
+        }
+        
         let textMsg = fieldsDataDict.valueForKey("msg_text") as? String
         if textMsg == nil || textMsg!.isEmpty {
             self.textMsgField.text = ""
