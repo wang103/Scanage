@@ -865,7 +865,7 @@
                                                     <action selector="playButtonPressed:" destination="vD3-LO-yN5" eventType="touchUpInside" id="JI0-Vg-8zv"/>
                                                 </connections>
                                             </button>
-                                            <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UbM-Qe-hVR">
+                                            <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="UbM-Qe-hVR">
                                                 <rect key="frame" x="224" y="119" width="368" height="2"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="hoV-Of-7wa"/>

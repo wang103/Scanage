@@ -21,6 +21,8 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     
     private var audioPlayer: AVAudioPlayer? = nil
     var audioData: NSData? = nil
+    private var updater: CADisplayLink? = nil
+    var totalDurationStr = ""
     @IBOutlet var playButton: UIButton!
     @IBOutlet var playInfoLabel: UILabel!
     @IBOutlet var playProgress: UIProgressView!
@@ -35,21 +37,59 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+        updater!.invalidate()
         playButton.setTitle("Play", forState: .Normal)
     }
     
     @IBAction func playButtonPressed(sender: UIButton) {
-        if audioPlayer?.playing == true {
+        if audioPlayer != nil && audioPlayer!.playing == true {
             // Playing -> not playing
-            playButton.setTitle("Play", forState: .Normal)
             audioPlayer!.stop()
+            audioPlayer!.currentTime = 0
+            playInfoLabel.text = getAudioTrackLabel(0)
+            updater!.invalidate()
+            playButton.setTitle("Play", forState: .Normal)
         }
-        else {
+        else if audioPlayer != nil {
             // Not playing -> playing
+            updater = CADisplayLink(target: self, selector: #selector(MessageDetailsViewController.trackAudio))
+            updater!.frameInterval = 1
+            updater!.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
+            
             playButton.setTitle("Stop", forState: .Normal)
             
             audioPlayer!.play()
         }
+    }
+    
+    private func convertSecondsToString(secs: Int) -> String {
+        var hours = 0
+        var minutes = 0
+        var seconds = secs
+        
+        if seconds >= 3600 {
+            hours = seconds / 3600
+            seconds -= 3600 * hours
+        }
+        
+        if seconds >= 60 {
+            minutes = seconds / 60
+            seconds -= 60 * minutes
+        }
+        
+        return "\(hours):\(minutes):\(seconds)"
+    }
+    
+    private func getAudioTrackLabel(curTime: Int) -> String {
+        let curStr = convertSecondsToString(curTime)
+        
+        return "\(curStr) / \(totalDurationStr)"
+    }
+    
+    func trackAudio() {
+        let percentage = Float(audioPlayer!.currentTime) / Float(audioPlayer!.duration)
+        self.playProgress.setProgress(percentage, animated: false)
+        playInfoLabel.text = getAudioTrackLabel(Int(audioPlayer!.currentTime))
     }
     
     
@@ -68,7 +108,9 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
                 self.audioPlayer!.delegate = self
                 
                 playButton.enabled = true
-                playInfoLabel.text = ""
+                totalDurationStr = convertSecondsToString(Int(audioPlayer!.duration))
+                playInfoLabel.text = getAudioTrackLabel(0)
+                playProgress.setProgress(0, animated: false)
                 voiceMsgErrorLabel.text = ""
             }
             catch {
@@ -78,6 +120,7 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
         else {
             playButton.enabled = false
             playInfoLabel.text = "N/A"
+            playProgress.setProgress(0, animated: false)
             voiceMsgErrorLabel.text = "empty"
         }
         
@@ -109,5 +152,17 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
         self.removeFromParentViewController()
         
         scanningVCDelegate!.startCaptureSession()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.overrideOutputAudioPort(.Speaker)
+        }
+        catch {
+            print("Error: unable to play audio via speaker")
+        }
     }
 }
