@@ -17,7 +17,17 @@ class MessageDetailsViewController: UIViewController {
     
     @IBOutlet var creatorField: UILabel!
     @IBOutlet var dateField: UILabel!
+    
+    @IBOutlet var playButton: UIButton!
+    @IBOutlet var playInfoLabel: UILabel!
+    @IBOutlet var playProgress: UIProgressView!
+    @IBOutlet var voiceMsgErrorLabel: UILabel!
+    
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var imageMsgErrorLabel: UILabel!
+    
     @IBOutlet var textMsgField: UITextView!
+    @IBOutlet var textMsgErrorLabel: UILabel!
     
     
     override func viewWillAppear(animated: Bool) {
