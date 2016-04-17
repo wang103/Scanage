@@ -34,6 +34,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         msgDetailsViewController.fieldsData = result
         
         // Get the NSData for audio and image now.
+        msgDetailsViewController.audioData = nil
         let fieldsDataDict = result.valueForKey("msg_detail") as! NSDictionary
         
         if let audioURLStr = fieldsDataDict["audio_file"] {
@@ -44,6 +45,7 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
             }
         }
         
+        msgDetailsViewController.imageData = nil
         if let imageURLStr = fieldsDataDict["image_file"] {
             if let url = NSURL(string: imageURLStr as! String) {
                 if let data = NSData(contentsOfURL: url) {

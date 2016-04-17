@@ -122,6 +122,9 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
             playInfoLabel.text = "N/A"
             playProgress.setProgress(0, animated: false)
             voiceMsgErrorLabel.text = "empty"
+            
+            self.audioPlayer = nil
+            self.updater = nil
         }
         
         if imageData != nil {
@@ -145,7 +148,12 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
-        audioPlayer?.stop()
+        if audioPlayer != nil {
+            audioPlayer!.stop()
+        }
+        if updater != nil {
+            updater!.invalidate()
+        }
         
         self.willMoveToParentViewController(nil)
         self.view.removeFromSuperview()
