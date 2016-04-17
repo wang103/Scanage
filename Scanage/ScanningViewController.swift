@@ -33,6 +33,27 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         
         msgDetailsViewController.fieldsData = result
         
+        // Get the NSData for audio and image now.
+        let fieldsDataDict = result.valueForKey("msg_detail") as! NSDictionary
+        
+        if let audioURLStr = fieldsDataDict["audio_file"] {
+            if let url = NSURL(string: audioURLStr as! String) {
+                if let data = NSData(contentsOfURL: url) {
+                    msgDetailsViewController.audioData = data
+                }
+            }
+        }
+        
+        if let imageURLStr = fieldsDataDict["image_file"] {
+            if let url = NSURL(string: imageURLStr as! String) {
+                if let data = NSData(contentsOfURL: url) {
+                    msgDetailsViewController.imageData = data
+                }
+            }
+        }
+        
+        self.spinner.stopAnimating()
+        
         self.addChildViewController(msgDetailsViewController!)
         self.view.addSubview(msgDetailsViewController!.view)
         self.view.bringSubviewToFront(msgDetailsViewController!.view)
@@ -55,10 +76,10 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
             let result = ServerAPIHelper.getMessage(qrString)
             
             dispatch_async(dispatch_get_main_queue()) {
-                self.spinner.stopAnimating()
                 
                 if result == nil || result!.valueForKey("success") as! Bool == false {
                     // QR code is not a Scanage QR.
+                    self.spinner.stopAnimating()
                     
                     let alert = UIAlertController(title: "Invalid QR code", message: "This is not a QR code created by this app.",
                                                   preferredStyle: .Alert)

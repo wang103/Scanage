@@ -853,7 +853,7 @@
                                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNS-8C-AUb">
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNS-8C-AUb">
                                                 <rect key="frame" x="8" y="105" width="80" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="CPp-pw-K9P"/>
@@ -861,6 +861,9 @@
                                                 </constraints>
                                                 <state key="normal" title="Play" backgroundImage="button_white"/>
                                                 <state key="highlighted" backgroundImage="button_blue"/>
+                                                <connections>
+                                                    <action selector="playButtonPressed:" destination="vD3-LO-yN5" eventType="touchUpInside" id="JI0-Vg-8zv"/>
+                                                </connections>
                                             </button>
                                             <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UbM-Qe-hVR">
                                                 <rect key="frame" x="224" y="119" width="368" height="2"/>
