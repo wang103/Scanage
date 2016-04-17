@@ -37,7 +37,16 @@ class MessageDetailsViewController: UIViewController {
         
         self.creatorField.text = fieldsDataDict.valueForKey("creator") as? String
         self.dateField.text = fieldsDataDict.valueForKey("create_date") as? String
-        self.textMsgField.text = fieldsDataDict.valueForKey("msg_text") as? String
+        
+        let textMsg = fieldsDataDict.valueForKey("msg_text") as? String
+        if textMsg == nil || textMsg!.isEmpty {
+            self.textMsgField.text = ""
+            self.textMsgErrorLabel.text = "empty"
+        }
+        else {
+            self.textMsgField.text = textMsg!
+            self.textMsgErrorLabel.text = ""
+        }
     }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
