@@ -175,12 +175,10 @@ class ServerAPIHelper {
         
         return { csrfToken in
             
-            var postParams = [
-                "csrfmiddlewaretoken": csrfToken
+            let postParams = [
+                "csrfmiddlewaretoken": csrfToken,
+                "msg_text": textMsg
             ]
-            if textMsg.isEmpty == false {
-                postParams["msg_text"] = textMsg
-            }
             
             request.HTTPBody = createBodyWithParameters(postParams, fileKeys: fileKeys, urls: urls, boundary: boundary)
             
