@@ -1062,6 +1062,40 @@
             </objects>
             <point key="canvasLocation" x="750" y="1115"/>
         </scene>
+        <!--Image View Controller-->
+        <scene sceneID="Jqs-Po-u7a">
+            <objects>
+                <viewController storyboardIdentifier="ImageVC" id="pcl-g0-uDo" customClass="ImageViewController" customModule="Scanage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wcf-md-SD1"/>
+                        <viewControllerLayoutGuide type="bottom" id="DpO-cJ-RQA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hyw-5Z-NFB">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fP0-m9-qEL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="fP0-m9-qEL" secondAttribute="trailing" id="0Hy-hb-R4c"/>
+                            <constraint firstItem="fP0-m9-qEL" firstAttribute="leading" secondItem="hyw-5Z-NFB" secondAttribute="leading" id="8LD-9h-pUW"/>
+                            <constraint firstItem="DpO-cJ-RQA" firstAttribute="top" secondItem="fP0-m9-qEL" secondAttribute="bottom" id="8RB-az-k53"/>
+                            <constraint firstItem="fP0-m9-qEL" firstAttribute="top" secondItem="wcf-md-SD1" secondAttribute="bottom" id="lSS-Sy-CVn"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="imageView" destination="fP0-m9-qEL" id="8v4-Rt-1SN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4B2-Od-bcy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="1821"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>

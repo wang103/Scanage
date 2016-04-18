@@ -35,6 +35,23 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet var textMsgField: UITextView!
     @IBOutlet var textMsgErrorLabel: UILabel!
     
+    private var imageViewController: ImageViewController!
+    
+    
+    func switchToImageView() {
+        if imageViewController == nil {
+            imageViewController = storyboard?.instantiateViewControllerWithIdentifier("ImageVC") as! ImageViewController
+            imageViewController.view.frame = view.layer.bounds
+        }
+        
+        imageViewController.imageData = self.imageData
+        
+        self.addChildViewController(imageViewController!)
+        self.view.addSubview(imageViewController!.view)
+        self.view.bringSubviewToFront(imageViewController!.view)
+        imageViewController!.didMoveToParentViewController(self)
+    }
+    
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         updater!.invalidate()
@@ -130,10 +147,14 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
         if imageData != nil {
             imageView.image = UIImage(data: imageData!)
             imageMsgErrorLabel.text = ""
+            
+            // Enable click to enlarge.
+            imageView.userInteractionEnabled = true
         }
         else {
             imageView.image = nil
             imageMsgErrorLabel.text = "empty"
+            imageView.userInteractionEnabled = false
         }
         
         let textMsg = fieldsDataDict.valueForKey("msg_text") as? String
@@ -145,6 +166,10 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
             self.textMsgField.text = textMsg!
             self.textMsgErrorLabel.text = ""
         }
+    }
+    
+    func tap(gesture: UITapGestureRecognizer) {
+        switchToImageView()
     }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
@@ -162,6 +187,14 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
         scanningVCDelegate!.startCaptureSession()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if imageViewController != nil {
+            imageViewController.view.frame = view.layer.bounds
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -171,6 +204,21 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
         }
         catch {
             print("Error: unable to play audio via speaker")
+        }
+        
+        imageViewController = storyboard?.instantiateViewControllerWithIdentifier("ImageVC") as! ImageViewController
+        imageViewController.view.frame = view.layer.bounds
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MessageDetailsViewController.tap(_:)))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        imageView.userInteractionEnabled = false
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        if imageViewController != nil && imageViewController.view.superview == nil {
+            imageViewController = nil
         }
     }
 }
