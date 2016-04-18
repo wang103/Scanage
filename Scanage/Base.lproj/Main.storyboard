@@ -23,10 +23,9 @@
                                 <color key="color" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nlc-wV-DL4">
-                                <rect key="frame" x="150" y="318" width="300" height="21"/>
+                                <rect key="frame" x="20" y="318" width="560" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="3ID-1m-1q9"/>
-                                    <constraint firstAttribute="width" constant="300" id="ryy-Vu-3pq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                 <color key="textColor" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -230,9 +229,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Nlc-wV-DL4" firstAttribute="trailing" secondItem="tsR-hK-woN" secondAttribute="trailingMargin" id="BgB-LC-xld"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gdk-kt-m8B" secondAttribute="trailing" constant="-20" id="HIe-HD-FME"/>
+                            <constraint firstItem="Nlc-wV-DL4" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="Hp2-YB-JS6"/>
                             <constraint firstItem="gdk-kt-m8B" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="IvH-Oh-LNC"/>
-                            <constraint firstItem="Nlc-wV-DL4" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="Ro0-rZ-ovv"/>
                             <constraint firstItem="gdk-kt-m8B" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-20" id="VZb-Ky-MxA"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="gdk-kt-m8B" secondAttribute="bottom" id="mza-if-Sra"/>
                             <constraint firstItem="qWQ-xK-Ldl" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="n30-8G-qqt"/>
