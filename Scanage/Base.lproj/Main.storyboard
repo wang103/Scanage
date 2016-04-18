@@ -28,8 +28,8 @@
                                     <constraint firstAttribute="height" constant="21" id="3ID-1m-1q9"/>
                                     <constraint firstAttribute="width" constant="300" id="ryy-Vu-3pq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
+                                <color key="textColor" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdk-kt-m8B">
@@ -419,18 +419,31 @@
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                                 <color key="color" red="0.27058823529411763" green="0.60392156862745094" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOM-fs-vdI">
+                                <rect key="frame" x="20" y="318" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="lcb-we-9UJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
+                                <color key="textColor" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Cm8-BK-c67" firstAttribute="centerY" secondItem="QS5-Rx-YEW" secondAttribute="centerY" id="7ET-oN-Laq"/>
+                            <constraint firstItem="uOM-fs-vdI" firstAttribute="top" secondItem="Cm8-BK-c67" secondAttribute="bottom" constant="8" id="BCB-uh-MhG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uOM-fs-vdI" secondAttribute="trailing" id="hey-94-0Wq"/>
                             <constraint firstItem="XIo-ys-ynT" firstAttribute="centerY" secondItem="QS5-Rx-YEW" secondAttribute="centerY" id="iAQ-gQ-WWR"/>
                             <constraint firstItem="XIo-ys-ynT" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="lus-Wd-Tqz"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="uOM-fs-vdI" secondAttribute="leading" id="r01-4i-bbU"/>
                             <constraint firstItem="Cm8-BK-c67" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="yrb-ka-egf"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Scan QR" image="tab2_scan" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="spinner" destination="Cm8-BK-c67" id="JSX-pE-hwP"/>
+                        <outlet property="spinnerMsgLabel" destination="uOM-fs-vdI" id="GwV-Su-kwV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
