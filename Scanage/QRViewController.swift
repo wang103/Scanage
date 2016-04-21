@@ -31,6 +31,37 @@ class QRViewController: UIViewController {
     }
     
     
+    private func addTextToImage(text: String, img: UIImage) -> UIImage {
+        
+        let textFont: UIFont = UIFont(name: "Helvetica Bold", size: 18)!
+        let textColor: UIColor = UIColor.init(red: 0.28, green: 0.64, blue: 0.98, alpha: 1.0)
+        
+        let extendHeight: CGFloat = 25.0
+        var imageSize = img.size
+        imageSize.height += extendHeight
+        
+        UIGraphicsBeginImageContext(imageSize)
+        
+        let textFontAttributes = [
+            NSFontAttributeName: textFont,
+            NSForegroundColorAttributeName: textColor
+        ]
+        
+        // Write the image on top.
+        img.drawInRect(CGRectMake(0, 0, img.size.width, img.size.height))
+        
+        // Write the text on bottom.
+        let textRect = CGRectMake(5, img.size.height, img.size.width - 10, extendHeight)
+        
+        (text as NSString).drawInRect(textRect, withAttributes: textFontAttributes)
+        
+        let newImg = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return newImg
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -48,6 +79,10 @@ class QRViewController: UIViewController {
         
         let qrImage = UIImage(CIImage: scaledImage)
         
-        qrImageView.image = qrImage
+        let appName = NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
+        let text = "Scan this using \(appName), available on Apple App Store."
+        let qrImageWithText = addTextToImage(text, img: qrImage)
+        
+        qrImageView.image = qrImageWithText
     }
 }
