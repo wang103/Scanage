@@ -35,7 +35,13 @@ class QRViewController: UIViewController {
         filter!.setValue(data, forKey: "inputMessage")
         
         let image: CIImage = filter!.outputImage!
-        let qrImage = UIImage(CIImage: image)
+        
+        let scaleX = 500.0 / image.extent.size.width
+        let scaleY = 500.0 / image.extent.size.height
+        
+        let scaledImage = image.imageByApplyingTransform(CGAffineTransformMakeScale(scaleX, scaleY))
+        
+        let qrImage = UIImage(CIImage: scaledImage)
         
         qrImageView.image = qrImage
     }
