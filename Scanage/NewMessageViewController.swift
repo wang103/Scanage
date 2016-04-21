@@ -33,6 +33,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     private let imagePicker = UIImagePickerController()
     
     private var loginViewController: LoginViewController!
+    private var qrViewController: QRViewController!
     
     
     func submitMsgCompleted(result: NSDictionary?) {
@@ -68,7 +69,9 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             }
             else {
                 // Message submitted successfully.
-                print("New message submitted")
+                
+                
+                self.switchToQRView()
             }
         }
     }
@@ -260,6 +263,18 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     
+    func switchToQRView() {
+        if qrViewController == nil {
+            qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
+            qrViewController.view.frame = view.layer.bounds
+        }
+        
+        self.addChildViewController(qrViewController!)
+        self.view.addSubview(qrViewController!.view)
+        self.view.bringSubviewToFront(qrViewController!.view)
+        qrViewController!.didMoveToParentViewController(self)
+    }
+    
     func switchToLoginView() {
         if loginViewController == nil {
             loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
@@ -301,6 +316,10 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     override func viewWillLayoutSubviews() {
         if loginViewController != nil {
             loginViewController.view.frame = view.layer.bounds
+        }
+        
+        if qrViewController != nil {
+            qrViewController.view.frame = view.layer.bounds
         }
     }
     
@@ -367,6 +386,9 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
         loginViewController.view.frame = view.layer.bounds
         
+        qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
+        qrViewController.view.frame = view.layer.bounds
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewMessageViewController.keyboardWillShow(_:)),
                                                          name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewMessageViewController.keyboardWillHide(_:)),
@@ -395,6 +417,9 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
         if loginViewController != nil && loginViewController.view.superview == nil {
             loginViewController = nil
+        }
+        if qrViewController != nil && qrViewController.view.superview == nil {
+            qrViewController = nil
         }
     }
 }

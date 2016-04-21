@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -257,6 +258,104 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="750" y="-321"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="1f0-QJ-s1a">
+            <objects>
+                <viewController storyboardIdentifier="QRVC" id="hnY-6r-lQm" customClass="QRViewController" customModule="Scanage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mjw-lA-BF2"/>
+                        <viewControllerLayoutGuide type="bottom" id="nsF-tf-tfr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mnm-M4-zGd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wiw-Cw-zv3">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="HnO-8r-hnO"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="QR Code" id="uDW-ex-0Di">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="qbt-ht-JGp">
+                                            <connections>
+                                                <action selector="removeFromParent:" destination="kbG-j0-z1f" id="vQM-S6-uFE"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vSO-bD-Cb6">
+                                <rect key="frame" x="20" y="84" width="461" height="439"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="vSO-bD-Cb6" secondAttribute="height" multiplier="1:1" id="amR-ul-dFt"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRF-7y-1NW">
+                                <rect key="frame" x="12" y="463" width="140" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="3NN-Ek-A6L"/>
+                                    <constraint firstAttribute="height" constant="30" id="jg3-M6-cfs"/>
+                                </constraints>
+                                <state key="normal" title="Send via Email" backgroundImage="button_white"/>
+                                <state key="highlighted" backgroundImage="button_blue"/>
+                                <connections>
+                                    <action selector="removeFromParent:" destination="hnY-6r-lQm" eventType="touchUpInside" id="UFb-w6-DGW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nsF-tf-tfr" firstAttribute="top" secondItem="vSO-bD-Cb6" secondAttribute="bottom" constant="20" id="5fE-aa-SCi"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="vSO-bD-Cb6" secondAttribute="leading" id="ExC-9H-gQF"/>
+                            <constraint firstItem="xRF-7y-1NW" firstAttribute="top" secondItem="vSO-bD-Cb6" secondAttribute="bottom" constant="30" id="ImG-hs-Bky"/>
+                            <constraint firstItem="xRF-7y-1NW" firstAttribute="centerY" secondItem="vSO-bD-Cb6" secondAttribute="centerY" id="Mct-DY-AM6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xRF-7y-1NW" secondAttribute="trailing" id="SMk-C2-x5d"/>
+                            <constraint firstItem="Wiw-Cw-zv3" firstAttribute="top" secondItem="mjw-lA-BF2" secondAttribute="bottom" id="TsJ-Yb-rws"/>
+                            <constraint firstItem="vSO-bD-Cb6" firstAttribute="top" secondItem="Wiw-Cw-zv3" secondAttribute="bottom" constant="20" id="aEE-EO-WVn"/>
+                            <constraint firstItem="Wiw-Cw-zv3" firstAttribute="width" secondItem="Mnm-M4-zGd" secondAttribute="width" id="dxS-n8-LOP"/>
+                            <constraint firstAttribute="trailing" secondItem="vSO-bD-Cb6" secondAttribute="trailing" constant="20" id="jMe-P3-T6h"/>
+                            <constraint firstItem="xRF-7y-1NW" firstAttribute="centerX" secondItem="Mnm-M4-zGd" secondAttribute="centerX" id="rA5-hh-FNT"/>
+                            <constraint firstItem="Wiw-Cw-zv3" firstAttribute="leading" secondItem="Mnm-M4-zGd" secondAttribute="leading" id="x0v-O6-Swa"/>
+                            <constraint firstItem="vSO-bD-Cb6" firstAttribute="leading" secondItem="Mnm-M4-zGd" secondAttribute="leading" constant="20" id="zh4-Sx-Lls"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ExC-9H-gQF"/>
+                                <exclude reference="jMe-P3-T6h"/>
+                                <exclude reference="zh4-Sx-Lls"/>
+                                <exclude reference="ImG-hs-Bky"/>
+                                <exclude reference="Mct-DY-AM6"/>
+                                <exclude reference="SMk-C2-x5d"/>
+                                <exclude reference="rA5-hh-FNT"/>
+                                <exclude reference="5fE-aa-SCi"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <include reference="ExC-9H-gQF"/>
+                                <include reference="Mct-DY-AM6"/>
+                                <include reference="SMk-C2-x5d"/>
+                                <include reference="5fE-aa-SCi"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="constraints">
+                                <include reference="jMe-P3-T6h"/>
+                                <include reference="zh4-Sx-Lls"/>
+                                <include reference="ImG-hs-Bky"/>
+                                <include reference="rA5-hh-FNT"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="qrImageView" destination="vSO-bD-Cb6" id="QgH-SG-5mw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ngs-Z2-uBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1436" y="-321"/>
         </scene>
         <!--Account-->
         <scene sceneID="E6F-mA-SVB">
