@@ -11,6 +11,8 @@ import Foundation
 
 class QRViewController: UIViewController {
     
+    var newMsgVCDelegate: NewMessageViewControllerDelegate! = nil
+    
     var qrString: String = ""
     @IBOutlet var qrImageView: UIImageView!
     
@@ -22,6 +24,7 @@ class QRViewController: UIViewController {
     }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
+        newMsgVCDelegate!.clearFields()
         self.removeFromParentHelper()
     }
     

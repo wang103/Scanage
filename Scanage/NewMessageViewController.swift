@@ -9,8 +9,12 @@
 import UIKit
 import AVFoundation
 
+protocol NewMessageViewControllerDelegate {
+    func clearFields()
+}
+
 class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate,
-    UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    UIImagePickerControllerDelegate, UINavigationControllerDelegate, NewMessageViewControllerDelegate {
 
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var spinnerMsgLabel: UILabel!
@@ -34,6 +38,23 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     
     private var loginViewController: LoginViewController!
     private var qrViewController: QRViewController!
+    
+    
+    func clearFields() {
+        spinnerMsgLabel.text = ""
+        
+        recordingButton.enabled = true
+        playingButton.enabled = false
+        voiceInfoLabel.text = ""
+        recorded = false
+        
+        pickImageButton.enabled = true
+        clearImageButton.enabled = false
+        imageView.image = nil
+        
+        textView.text = ""
+        submitButton.enabled = true
+    }
     
     
     func submitMsgCompleted(result: NSDictionary?) {
@@ -269,6 +290,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         if qrViewController == nil {
             qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
             qrViewController.view.frame = view.layer.bounds
+            qrViewController.newMsgVCDelegate = self
         }
         
         qrViewController.qrString = qrString
@@ -392,6 +414,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
         qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
         qrViewController.view.frame = view.layer.bounds
+        qrViewController.newMsgVCDelegate = self
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewMessageViewController.keyboardWillShow(_:)),
                                                          name: UIKeyboardWillShowNotification, object: nil)
