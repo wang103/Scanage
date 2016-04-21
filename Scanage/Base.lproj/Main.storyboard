@@ -304,16 +304,32 @@
                                     <action selector="sendEmail:" destination="hnY-6r-lQm" eventType="touchUpInside" id="3fP-g8-BKK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyY-J0-6Uj">
+                                <rect key="frame" x="230" y="550" width="140" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="IvE-yL-abD"/>
+                                    <constraint firstAttribute="height" constant="30" id="JIG-LH-Uyc"/>
+                                </constraints>
+                                <state key="normal" title="Save a Copy" backgroundImage="button_white"/>
+                                <state key="highlighted" backgroundImage="button_blue"/>
+                                <connections>
+                                    <action selector="saveImage:" destination="hnY-6r-lQm" eventType="touchUpInside" id="KQA-6A-64L"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="eyY-J0-6Uj" secondAttribute="trailing" id="4fs-Od-eSt"/>
                             <constraint firstItem="nsF-tf-tfr" firstAttribute="top" secondItem="vSO-bD-Cb6" secondAttribute="bottom" constant="20" id="5fE-aa-SCi"/>
+                            <constraint firstItem="eyY-J0-6Uj" firstAttribute="top" secondItem="xRF-7y-1NW" secondAttribute="bottom" constant="8" id="7vg-e9-xSW"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vSO-bD-Cb6" secondAttribute="leading" id="ExC-9H-gQF"/>
                             <constraint firstItem="xRF-7y-1NW" firstAttribute="top" secondItem="vSO-bD-Cb6" secondAttribute="bottom" constant="30" id="ImG-hs-Bky"/>
                             <constraint firstItem="xRF-7y-1NW" firstAttribute="centerY" secondItem="vSO-bD-Cb6" secondAttribute="centerY" id="Mct-DY-AM6"/>
+                            <constraint firstItem="eyY-J0-6Uj" firstAttribute="bottom" secondItem="vSO-bD-Cb6" secondAttribute="bottom" id="SDQ-1T-kaW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xRF-7y-1NW" secondAttribute="trailing" id="SMk-C2-x5d"/>
                             <constraint firstItem="Wiw-Cw-zv3" firstAttribute="top" secondItem="mjw-lA-BF2" secondAttribute="bottom" id="TsJ-Yb-rws"/>
                             <constraint firstItem="vSO-bD-Cb6" firstAttribute="top" secondItem="Wiw-Cw-zv3" secondAttribute="bottom" constant="20" id="aEE-EO-WVn"/>
+                            <constraint firstItem="eyY-J0-6Uj" firstAttribute="centerX" secondItem="Mnm-M4-zGd" secondAttribute="centerX" id="d7W-kc-9a6"/>
                             <constraint firstItem="Wiw-Cw-zv3" firstAttribute="width" secondItem="Mnm-M4-zGd" secondAttribute="width" id="dxS-n8-LOP"/>
                             <constraint firstAttribute="trailing" secondItem="vSO-bD-Cb6" secondAttribute="trailing" constant="20" id="jMe-P3-T6h"/>
                             <constraint firstItem="xRF-7y-1NW" firstAttribute="centerX" secondItem="Mnm-M4-zGd" secondAttribute="centerX" id="rA5-hh-FNT"/>
@@ -325,19 +341,25 @@
                                 <exclude reference="ExC-9H-gQF"/>
                                 <exclude reference="jMe-P3-T6h"/>
                                 <exclude reference="zh4-Sx-Lls"/>
+                                <exclude reference="5fE-aa-SCi"/>
                                 <exclude reference="ImG-hs-Bky"/>
                                 <exclude reference="Mct-DY-AM6"/>
                                 <exclude reference="SMk-C2-x5d"/>
                                 <exclude reference="rA5-hh-FNT"/>
-                                <exclude reference="5fE-aa-SCi"/>
+                                <exclude reference="4fs-Od-eSt"/>
+                                <exclude reference="7vg-e9-xSW"/>
+                                <exclude reference="SDQ-1T-kaW"/>
+                                <exclude reference="d7W-kc-9a6"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
                                 <include reference="ExC-9H-gQF"/>
+                                <include reference="5fE-aa-SCi"/>
                                 <include reference="Mct-DY-AM6"/>
                                 <include reference="SMk-C2-x5d"/>
-                                <include reference="5fE-aa-SCi"/>
+                                <include reference="4fs-Od-eSt"/>
+                                <include reference="SDQ-1T-kaW"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -346,6 +368,8 @@
                                 <include reference="zh4-Sx-Lls"/>
                                 <include reference="ImG-hs-Bky"/>
                                 <include reference="rA5-hh-FNT"/>
+                                <include reference="7vg-e9-xSW"/>
+                                <include reference="d7W-kc-9a6"/>
                             </mask>
                         </variation>
                     </view>

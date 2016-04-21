@@ -33,6 +33,26 @@ class QRViewController: UIViewController {
         
     }
     
+    @IBAction func saveImage(sender: UIButton) {
+        UIImageWriteToSavedPhotosAlbum(qrImageView.image!, self,
+                                       #selector(QRViewController.imageSaved(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    func imageSaved(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafePointer<Void>) {
+        if error == nil {
+            let alert = UIAlertController(title: "Saved!", message: "Image has been saved to photos.",
+                                          preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else {
+            let alert = UIAlertController(title: "Save Error", message: error?.localizedDescription,
+                                          preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     
     private func addTextToImage(text: String, img: UIImage) -> UIImage {
         
