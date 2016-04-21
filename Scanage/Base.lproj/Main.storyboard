@@ -280,7 +280,7 @@
                                     <navigationItem title="QR Code" id="uDW-ex-0Di">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="qbt-ht-JGp">
                                             <connections>
-                                                <action selector="removeFromParent:" destination="kbG-j0-z1f" id="vQM-S6-uFE"/>
+                                                <action selector="removeFromParent:" destination="hnY-6r-lQm" id="MXh-KL-ynQ"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -301,7 +301,7 @@
                                 <state key="normal" title="Send via Email" backgroundImage="button_white"/>
                                 <state key="highlighted" backgroundImage="button_blue"/>
                                 <connections>
-                                    <action selector="removeFromParent:" destination="hnY-6r-lQm" eventType="touchUpInside" id="UFb-w6-DGW"/>
+                                    <action selector="sendEmail:" destination="hnY-6r-lQm" eventType="touchUpInside" id="3fP-g8-BKK"/>
                                 </connections>
                             </button>
                         </subviews>

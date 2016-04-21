@@ -26,6 +26,11 @@ class QRViewController: UIViewController {
     }
     
     
+    @IBAction func sendEmail(sender: UIButton) {
+        
+    }
+    
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
