@@ -24,4 +24,19 @@ class QRViewController: UIViewController {
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
         self.removeFromParentHelper()
     }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Create the image.
+        let data = qrString.dataUsingEncoding(NSISOLatin1StringEncoding, allowLossyConversion: false)
+        let filter = CIFilter(name: "CIQRCodeGenerator")
+        filter!.setValue(data, forKey: "inputMessage")
+        
+        let image: CIImage = filter!.outputImage!
+        let qrImage = UIImage(CIImage: image)
+        
+        qrImageView.image = qrImage
+    }
 }

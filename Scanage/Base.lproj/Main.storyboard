@@ -286,7 +286,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vSO-bD-Cb6">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vSO-bD-Cb6">
                                 <rect key="frame" x="20" y="84" width="461" height="439"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="vSO-bD-Cb6" secondAttribute="height" multiplier="1:1" id="amR-ul-dFt"/>

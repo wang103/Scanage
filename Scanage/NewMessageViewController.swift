@@ -70,8 +70,10 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             else {
                 // Message submitted successfully.
                 
+                let msg_detail = result!.valueForKey("msg_detail") as! NSDictionary
+                let qrString = msg_detail.valueForKey("qr_str") as! String
                 
-                self.switchToQRView()
+                self.switchToQRView(qrString)
             }
         }
     }
@@ -263,11 +265,13 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     
-    func switchToQRView() {
+    func switchToQRView(qrString: String) {
         if qrViewController == nil {
             qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
             qrViewController.view.frame = view.layer.bounds
         }
+        
+        qrViewController.qrString = qrString
         
         self.addChildViewController(qrViewController!)
         self.view.addSubview(qrViewController!.view)
