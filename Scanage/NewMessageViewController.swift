@@ -39,6 +39,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     private var loginViewController: LoginViewController!
     private var qrViewController: QRViewController!
     
+    private var userEmail: String? = nil
+    
     
     func clearFields() {
         spinnerMsgLabel.text = ""
@@ -298,6 +300,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         }
         
         qrViewController.qrString = qrString
+        qrViewController.userEmail = self.userEmail
         
         self.addChildViewController(qrViewController!)
         self.view.addSubview(qrViewController!.view)
@@ -317,19 +320,21 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         loginViewController!.didMoveToParentViewController(self)
     }
     
-    func getLoginInfoCompleted(result: NSDictionary?) {
+    func getUserInfoCompleted(result: NSDictionary?) {
         dispatch_async(dispatch_get_main_queue()) {
             self.spinner.stopAnimating()
             self.spinnerMsgLabel.hidden = true
             
-            if result == nil || result!.valueForKey("success") as! Bool == false {
+            if result == nil {
                 print("testIfLoggedIn failed")
             }
+            else if result!.valueForKey("success") as! Bool == false {
+                // This could only be because user is not logged in.
+                self.switchToLoginView()
+            }
             else {
-                let fLoggedIn = result!.valueForKey("is_logged_in") as! Bool
-                if !fLoggedIn {
-                    self.switchToLoginView()
-                }
+                let userInfo = result!.valueForKey("user_info") as! NSDictionary
+                self.userEmail = userInfo.valueForKey("email") as? String
             }
         }
     }
@@ -339,8 +344,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         self.spinnerMsgLabel.text = "checking login status..."
         spinner.startAnimating()
         
-        // Send a POST request to get login info.
-        ServerAPIHelper.getLoginInfo(getLoginInfoCompleted)
+        // Send a POST request to get user info.
+        ServerAPIHelper.getUserInfo(getUserInfoCompleted)
     }
     
     override func viewWillLayoutSubviews() {

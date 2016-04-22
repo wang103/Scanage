@@ -8,13 +8,15 @@
 
 import UIKit
 import Foundation
+import MessageUI
 
-class QRViewController: UIViewController {
+class QRViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     var newMsgVCDelegate: NewMessageViewControllerDelegate! = nil
     
     var qrString: String = ""
     @IBOutlet var qrImageView: UIImageView!
+    var userEmail: String? = nil
     
     
     private func removeFromParentHelper() {
@@ -29,8 +31,40 @@ class QRViewController: UIViewController {
     }
     
     
+    private func getAppName() -> String {
+        let appName = NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
+        return appName
+    }
+    
     @IBAction func sendEmail(sender: UIButton) {
-        
+        if (MFMailComposeViewController.canSendMail()) {
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            
+            let appName = getAppName()
+            mailComposer.setSubject("QR Code from \(appName)")
+            mailComposer.setMessageBody("Retrieve the message by scanning with \(appName)", isHTML: false)
+            
+            if userEmail != nil {
+                mailComposer.setToRecipients([userEmail!])
+            }
+            
+            if let qrImageData = UIImageJPEGRepresentation(qrImageView.image!, 1.0) {
+                mailComposer.addAttachmentData(qrImageData, mimeType: "image/jpeg", fileName: "qrcode")
+            }
+            
+            self.presentViewController(mailComposer, animated: true, completion: nil)
+        }
+        else {
+            let alert = UIAlertController(title: "Error", message: "Your device is not setup to send emails.",
+                                          preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func saveImage(sender: UIButton) {
@@ -102,7 +136,7 @@ class QRViewController: UIViewController {
         
         let qrImage = UIImage(CIImage: scaledImage)
         
-        let appName = NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
+        let appName = getAppName()
         let text = "Scan this using \(appName), available on Apple App Store."
         let qrImageWithText = addTextToImage(text, img: qrImage)
         
