@@ -60,6 +60,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     func submitMsgCompleted(result: NSDictionary?) {
         dispatch_async(dispatch_get_main_queue()) {
             self.stopSpinner()
+            self.spinnerMsgLabel.text = ""
+            self.spinnerMsgLabel.hidden = true
             
             if result == nil {
                 print("submit new message failed")
@@ -125,6 +127,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         let textMsg = self.textView.text
         
         self.startSpinner()
+        self.spinnerMsgLabel.text = "Submitting..."
+        self.spinnerMsgLabel.hidden = false
         
         // Send a POST to request to submit new message.
         ServerAPIHelper.submitNewMsg(textMsg, fileKeys: fileKeys, urls: urls, completion: submitMsgCompleted)
