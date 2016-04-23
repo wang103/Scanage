@@ -101,6 +101,17 @@ class ServerAPIHelper {
         }
     }
     
+    static func getMessages(completion: NSDictionary? -> ()) {
+        let toGetMessages = getMessagesHelper(completion)
+        
+        if toGetMessages == nil {
+            print("error: getMessagesHelper failed")
+        }
+        else {
+            ensureCookie(toGetMessages!)
+        }
+    }
+    
     static func getMessage(qrCode: String) -> NSDictionary? {
         let urlString = rootURL + "msg/" + qrCode
         
@@ -445,6 +456,55 @@ class ServerAPIHelper {
                         result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                     } catch {
                         print("getUserInfoHelper: invalid JSON")
+                        result = nil
+                    }
+                }
+                
+                completion(result)
+            }
+            
+            task.resume()
+        }
+    }
+    
+    private static func getMessagesHelper(completion: NSDictionary? -> ()) -> (String -> ())? {
+        let urlString = rootURL + "usr_msgs/"
+        let url = NSURL(string: urlString)
+        
+        if url == nil {
+            return nil
+        }
+        
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        
+        return { csrfToken in
+            let postString = "csrfmiddlewaretoken=" + csrfToken
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let cookiesAddr = NSURL(string: cookieURL)
+            let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(cookiesAddr!)
+            if cookies != nil {
+                request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(cookies!)
+            }
+            else {
+                print("getMessagesHelper: about to send POST but cookie is nil")
+            }
+            
+            request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+                var result: NSDictionary? = nil
+                
+                if error != nil || data == nil {
+                    print("getMessagesHelper: error is present or data is absent")
+                    result = nil
+                }
+                else {
+                    do {
+                        result = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    } catch {
+                        print("getMessagesHelper: invalid JSON")
                         result = nil
                     }
                 }

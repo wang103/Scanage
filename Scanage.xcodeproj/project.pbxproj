@@ -16,6 +16,7 @@
 		801CEACE1C4229E700CDB3A5 /* ScanageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CEACD1C4229E700CDB3A5 /* ScanageTests.swift */; };
 		801CEAD91C4229E700CDB3A5 /* ScanageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CEAD81C4229E700CDB3A5 /* ScanageUITests.swift */; };
 		801CEAE71C423B4300CDB3A5 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CEAE61C423B4300CDB3A5 /* NewMessageViewController.swift */; };
+		8029C0A21CCC2EBB00098BAE /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029C0A11CCC2EBB00098BAE /* MessagesTableViewController.swift */; };
 		80316CFA1CB7A1A600F79F4B /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80316CF91CB7A1A600F79F4B /* RegisterViewController.swift */; };
 		8042BE891C46272700D3BADD /* MessageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042BE881C46272700D3BADD /* MessageDetailsViewController.swift */; };
 		8048F2711CC4C93D0016218C /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8048F2701CC4C93D0016218C /* ImageViewController.swift */; };
@@ -57,6 +58,7 @@
 		801CEAD81C4229E700CDB3A5 /* ScanageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanageUITests.swift; sourceTree = "<group>"; };
 		801CEADA1C4229E700CDB3A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		801CEAE61C423B4300CDB3A5 /* NewMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
+		8029C0A11CCC2EBB00098BAE /* MessagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
 		80316CF91CB7A1A600F79F4B /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		8042BE881C46272700D3BADD /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
 		8048F2701CC4C93D0016218C /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				80316CF91CB7A1A600F79F4B /* RegisterViewController.swift */,
 				8048F2701CC4C93D0016218C /* ImageViewController.swift */,
 				8048F2721CC89A130016218C /* QRViewController.swift */,
+				8029C0A11CCC2EBB00098BAE /* MessagesTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				808E7B361CB19F730089965D /* LoginViewController.swift in Sources */,
 				8048F2731CC89A130016218C /* QRViewController.swift in Sources */,
 				8048F2711CC4C93D0016218C /* ImageViewController.swift in Sources */,
+				8029C0A21CCC2EBB00098BAE /* MessagesTableViewController.swift in Sources */,
 				801CEABB1C4229E700CDB3A5 /* AccountViewController.swift in Sources */,
 				80DF30571C4E249800B0C1AB /* ServerAPIHelper.swift in Sources */,
 				80316CFA1CB7A1A600F79F4B /* RegisterViewController.swift in Sources */,

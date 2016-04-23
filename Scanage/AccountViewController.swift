@@ -20,6 +20,7 @@ class AccountViewController: UIViewController {
     @IBOutlet var messagesButton: UIButton!
     
     private var loginViewController: LoginViewController!
+    private var messagesTableViewController: MessagesTableViewController!
     
     
     func switchToLoginView() {
@@ -32,6 +33,43 @@ class AccountViewController: UIViewController {
         self.view.addSubview(loginViewController!.view)
         self.view.bringSubviewToFront(loginViewController!.view)
         loginViewController!.didMoveToParentViewController(self)
+    }
+    
+    func switchToMessagesView(messagesData: NSArray) {
+        if messagesTableViewController == nil {
+            messagesTableViewController = storyboard?.instantiateViewControllerWithIdentifier("MessagesTableVC") as! MessagesTableViewController
+            messagesTableViewController.view.frame = view.layer.bounds
+        }
+        
+        messagesTableViewController.messagesData = messagesData
+        
+        self.addChildViewController(messagesTableViewController!)
+        self.view.addSubview(messagesTableViewController!.view)
+        self.view.bringSubviewToFront(messagesTableViewController!.view)
+        messagesTableViewController!.didMoveToParentViewController(self)
+    }
+    
+    
+    func getUserMessagesCompleted(result: NSDictionary?) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.stopSpinner()
+            
+            if result == nil {
+                print("getMessages failed")
+            }
+            else if result!.valueForKey("success") as! Bool == false {
+                let ec = result!.valueForKey("ec") as! Int
+                
+                if ec == ServerAPIHelper.EC_NOT_LOGGED_IN {
+                    self.switchToLoginView()
+                }
+            }
+            else {
+                let messagesDataArray = result!.valueForKey("msgs") as! NSArray
+                
+                self.switchToMessagesView(messagesDataArray)
+            }
+        }
     }
     
     func getUserInfoCompleted(result: NSDictionary?) {
@@ -104,6 +142,13 @@ class AccountViewController: UIViewController {
         presentViewController(controller, animated: true, completion: nil)
     }
     
+    @IBAction func showMessages(sender: UIButton) {
+        startSpinner()
+        
+        // Send a POST request to get all user messages.
+        ServerAPIHelper.getMessages(self.getUserMessagesCompleted)
+    }
+    
     func startSpinner() {
         logoutButton.enabled = false
         messagesButton.enabled = false
@@ -122,13 +167,18 @@ class AccountViewController: UIViewController {
         if loginViewController != nil {
             loginViewController.view.frame = view.layer.bounds
         }
+        
+        if messagesTableViewController != nil {
+            messagesTableViewController.view.frame = view.layer.bounds
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // If not showing the login view, grab the user info.
-        if loginViewController == nil || loginViewController.view.superview == nil {
+        // If not showing any sub view, grab the user info.
+        if (loginViewController == nil || loginViewController.view.superview == nil) &&
+           (messagesTableViewController == nil || messagesTableViewController.view.superview == nil) {
             displayUserInfo()
         }
     }
@@ -138,6 +188,9 @@ class AccountViewController: UIViewController {
         
         loginViewController = storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
         loginViewController.view.frame = view.layer.bounds
+        
+        messagesTableViewController = storyboard?.instantiateViewControllerWithIdentifier("MessagesTableVC") as! MessagesTableViewController
+        messagesTableViewController.view.frame = view.layer.bounds
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,6 +198,10 @@ class AccountViewController: UIViewController {
         
         if loginViewController != nil && loginViewController.view.superview == nil {
             loginViewController = nil
+        }
+        
+        if messagesTableViewController != nil && messagesTableViewController.view.superview == nil {
+            messagesTableViewController = nil
         }
     }
 }
