@@ -159,10 +159,18 @@ class LoginViewController: UIViewController {
         testIfLoggedIn()
     }
     
+    func tap(gesture: UITapGestureRecognizer) {
+        usernameField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initSpinner()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.tap(_:)))
+        view.addGestureRecognizer(tapGesture)
         
         registerViewController = storyboard?.instantiateViewControllerWithIdentifier("RegisterVC") as! RegisterViewController
         registerViewController.view.frame = view.layer.bounds

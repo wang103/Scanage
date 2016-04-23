@@ -432,6 +432,11 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     func keyboardWillShow(notification: NSNotification) {
+        // If presenting login view, don't do anything.
+        if loginViewController != nil && loginViewController.view.superview != nil {
+            return
+        }
+        
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
             var target = -keyboardSize.height
             if let offset = self.tabBarController?.tabBar.frame.size.height {

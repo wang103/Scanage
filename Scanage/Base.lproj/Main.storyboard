@@ -341,7 +341,6 @@
                                 <exclude reference="ExC-9H-gQF"/>
                                 <exclude reference="jMe-P3-T6h"/>
                                 <exclude reference="zh4-Sx-Lls"/>
-                                <exclude reference="5fE-aa-SCi"/>
                                 <exclude reference="ImG-hs-Bky"/>
                                 <exclude reference="Mct-DY-AM6"/>
                                 <exclude reference="SMk-C2-x5d"/>
@@ -350,16 +349,17 @@
                                 <exclude reference="7vg-e9-xSW"/>
                                 <exclude reference="SDQ-1T-kaW"/>
                                 <exclude reference="d7W-kc-9a6"/>
+                                <exclude reference="5fE-aa-SCi"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
                                 <include reference="ExC-9H-gQF"/>
-                                <include reference="5fE-aa-SCi"/>
                                 <include reference="Mct-DY-AM6"/>
                                 <include reference="SMk-C2-x5d"/>
                                 <include reference="4fs-Od-eSt"/>
                                 <include reference="SDQ-1T-kaW"/>
+                                <include reference="5fE-aa-SCi"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
