@@ -416,19 +416,39 @@
                                     <outlet property="delegate" destination="ODp-pt-Nkw" id="SCh-xC-xL7"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-ob-TVq">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                                <color key="color" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kK-CE-K8z">
+                                <rect key="frame" x="20" y="318" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Y6j-DR-sM9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
+                                <color key="textColor" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="9p1-jH-2Bo" secondAttribute="trailing" id="Ce8-wN-BNt"/>
+                            <constraint firstItem="8kK-CE-K8z" firstAttribute="top" secondItem="IOq-ob-TVq" secondAttribute="bottom" constant="8" id="GSg-jq-V60"/>
+                            <constraint firstItem="8kK-CE-K8z" firstAttribute="leading" secondItem="bd2-3j-qLR" secondAttribute="leadingMargin" id="HwO-eY-y3e"/>
+                            <constraint firstItem="IOq-ob-TVq" firstAttribute="centerY" secondItem="bd2-3j-qLR" secondAttribute="centerY" id="JI5-rm-toq"/>
+                            <constraint firstItem="IOq-ob-TVq" firstAttribute="centerX" secondItem="bd2-3j-qLR" secondAttribute="centerX" id="Jpz-f6-QMR"/>
                             <constraint firstItem="0g4-OV-yzG" firstAttribute="top" secondItem="Hb2-bE-fSp" secondAttribute="bottom" id="Qjz-Ug-H6l"/>
                             <constraint firstAttribute="trailing" secondItem="0g4-OV-yzG" secondAttribute="trailing" id="eKs-Fz-b4V"/>
                             <constraint firstItem="9p1-jH-2Bo" firstAttribute="top" secondItem="0g4-OV-yzG" secondAttribute="bottom" id="fAW-yn-O6y"/>
                             <constraint firstItem="6nX-bc-4Q6" firstAttribute="top" secondItem="9p1-jH-2Bo" secondAttribute="bottom" id="ggX-mD-DzQ"/>
+                            <constraint firstItem="8kK-CE-K8z" firstAttribute="trailing" secondItem="bd2-3j-qLR" secondAttribute="trailingMargin" id="hpv-zh-UqL"/>
                             <constraint firstItem="0g4-OV-yzG" firstAttribute="leading" secondItem="bd2-3j-qLR" secondAttribute="leading" id="k4C-Yf-sh4"/>
                             <constraint firstItem="9p1-jH-2Bo" firstAttribute="leading" secondItem="bd2-3j-qLR" secondAttribute="leading" id="zhh-cl-oVh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="spinner" destination="IOq-ob-TVq" id="VNe-b8-uk4"/>
+                        <outlet property="spinnerMsgLabel" destination="8kK-CE-K8z" id="uRL-qF-f5L"/>
                         <outlet property="tableView" destination="9p1-jH-2Bo" id="TN1-es-naV"/>
                     </connections>
                 </viewController>

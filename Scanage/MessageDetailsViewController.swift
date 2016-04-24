@@ -12,7 +12,7 @@ import AVFoundation
 
 class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     
-    var scanningVCDelegate: ScanningViewControllerDelegate! = nil
+    var scanningVCDelegate: ScanningViewControllerDelegate? = nil
     
     var fieldsData: NSDictionary! = nil
     
@@ -184,7 +184,9 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
         
-        scanningVCDelegate!.startCaptureSession()
+        if scanningVCDelegate != nil {
+            scanningVCDelegate!.startCaptureSession()
+        }
     }
     
     override func viewWillLayoutSubviews() {

@@ -16,9 +16,13 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
     var email: String = ""
     var messagesData: NSArray! = nil
     
+    @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet var spinnerMsgLabel: UILabel!
+    
     @IBOutlet var tableView: UITableView!
     
     private var qrViewController: QRViewController!
+    private var msgDetailsViewController: MessageDetailsViewController!
     
     
     func switchToQRView(qrString: String) {
@@ -45,8 +49,104 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         switchToQRView(qrString)
     }
     
-    func detailsButtonPressed(sender: UIButton) {
+    
+    func switchToMsgDetailsView(result: NSDictionary) {
+        if msgDetailsViewController == nil {
+            msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
+            msgDetailsViewController.view.frame = view.layer.bounds
+        }
         
+        msgDetailsViewController.fieldsData = result
+        
+        // Get the NSData for audio and image now.
+        msgDetailsViewController.audioData = nil
+        let fieldsDataDict = result.valueForKey("msg_detail") as! NSDictionary
+        
+        if let audioURLStr = fieldsDataDict["audio_file"] {
+            spinnerMsgLabel.text = "Downloading audio file"
+            
+            if let url = NSURL(string: audioURLStr as! String) {
+                if let data = NSData(contentsOfURL: url) {
+                    msgDetailsViewController.audioData = data
+                }
+            }
+        }
+        
+        msgDetailsViewController.imageData = nil
+        if let imageURLStr = fieldsDataDict["image_file"] {
+            spinnerMsgLabel.text = "Downloading image file"
+            
+            if let url = NSURL(string: imageURLStr as! String) {
+                if let data = NSData(contentsOfURL: url) {
+                    msgDetailsViewController.imageData = data
+                }
+            }
+        }
+        
+        stopSpinner()
+        
+        self.addChildViewController(msgDetailsViewController!)
+        self.view.addSubview(msgDetailsViewController!.view)
+        self.view.bringSubviewToFront(msgDetailsViewController!.view)
+        msgDetailsViewController!.didMoveToParentViewController(self)
+    }
+    
+    func detailsButtonPressed(sender: UIButton) {
+        startSpinner()
+        spinnerMsgLabel.text = "Looking up..."
+        
+        let index = sender.tag
+        
+        let msgDict = messagesData.objectAtIndex(index) as! NSDictionary
+        let qrString = msgDict["qr_str"] as! String
+        
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
+        dispatch_async(queue) {
+            // Send a GET request to retrieve the msg associated with the QR string.
+            let result = ServerAPIHelper.getMessage(qrString)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                if result == nil || result!.valueForKey("success") as! Bool == false {
+                    // QR code is not a Scanage QR.
+                    self.stopSpinner()
+                    
+                    let alert = UIAlertController(title: "Error", message: "This message no longer exists.",
+                                                  preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                else {
+                    self.switchToMsgDetailsView(result!)
+                }
+            }
+        }
+    }
+    
+    
+    private func startSpinner() {
+        self.spinner.startAnimating()
+        
+        self.tableView.scrollEnabled = false
+        
+        for cell in tableView.visibleCells {
+            let messageCell = cell as! MessageTableCell
+            messageCell.qrButton.enabled = false
+            messageCell.detailsButton.enabled = false
+        }
+    }
+    
+    private func stopSpinner() {
+        spinnerMsgLabel.text = ""
+        self.spinner.stopAnimating()
+        
+        for cell in tableView.visibleCells {
+            let messageCell = cell as! MessageTableCell
+            messageCell.qrButton.enabled = true
+            messageCell.detailsButton.enabled = true
+        }
+        
+        self.tableView.scrollEnabled = true
     }
     
     
@@ -102,10 +202,21 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         if qrViewController != nil {
             qrViewController.view.frame = view.layer.bounds
         }
+        
+        if msgDetailsViewController != nil {
+            msgDetailsViewController.view.frame = view.layer.bounds
+        }
+    }
+    
+    func initSpinner() {
+        self.view.bringSubviewToFront(spinner)
+        self.view.bringSubviewToFront(spinnerMsgLabel)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initSpinner()
         
         tableView.registerClass(MessageTableCell.self, forCellReuseIdentifier: tableIdentifier)
         
@@ -118,6 +229,9 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         
         qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
         qrViewController.view.frame = view.layer.bounds
+        
+        msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
+        msgDetailsViewController.view.frame = view.layer.bounds
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,6 +239,10 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         
         if qrViewController != nil && qrViewController.view.superview == nil {
             qrViewController = nil
+        }
+        
+        if msgDetailsViewController != nil && msgDetailsViewController.view.superview == nil {
+            msgDetailsViewController = nil
         }
     }
 }
