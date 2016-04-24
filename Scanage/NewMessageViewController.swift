@@ -349,6 +349,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
         if loginViewController != nil {
             loginViewController.view.frame = view.layer.bounds
         }

@@ -12,7 +12,7 @@ import MessageUI
 
 class QRViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
-    var newMsgVCDelegate: NewMessageViewControllerDelegate! = nil
+    var newMsgVCDelegate: NewMessageViewControllerDelegate? = nil
     
     var qrString: String = ""
     @IBOutlet var qrImageView: UIImageView!
@@ -26,7 +26,9 @@ class QRViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
-        newMsgVCDelegate!.clearFields()
+        if newMsgVCDelegate != nil {
+            newMsgVCDelegate!.clearFields()
+        }
         self.removeFromParentHelper()
     }
     

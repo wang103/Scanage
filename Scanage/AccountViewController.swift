@@ -39,6 +39,7 @@ class AccountViewController: UIViewController {
         messagesTableViewController = storyboard?.instantiateViewControllerWithIdentifier("MessagesTableVC") as! MessagesTableViewController
         messagesTableViewController.view.frame = view.layer.bounds
         
+        messagesTableViewController.email = emailLabel.text!
         messagesTableViewController.messagesData = messagesData
         
         self.addChildViewController(messagesTableViewController!)

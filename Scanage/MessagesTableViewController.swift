@@ -13,9 +13,41 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
     
     private let tableIdentifier = "MessagesTableIdentifier"
     
+    var email: String = ""
     var messagesData: NSArray! = nil
     
     @IBOutlet var tableView: UITableView!
+    
+    private var qrViewController: QRViewController!
+    
+    
+    func switchToQRView(qrString: String) {
+        if qrViewController == nil {
+            qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
+            qrViewController.view.frame = view.layer.bounds
+        }
+        
+        qrViewController.qrString = qrString
+        qrViewController.userEmail = email
+        
+        self.addChildViewController(qrViewController!)
+        self.view.addSubview(qrViewController!.view)
+        self.view.bringSubviewToFront(qrViewController!.view)
+        qrViewController!.didMoveToParentViewController(self)
+    }
+    
+    func qrButtonPressed(sender: UIButton) {
+        let index = sender.tag
+        
+        let msgDict = messagesData.objectAtIndex(index) as! NSDictionary
+        let qrString = msgDict["qr_str"] as! String
+        
+        switchToQRView(qrString)
+    }
+    
+    func detailsButtonPressed(sender: UIButton) {
+        
+    }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,6 +62,14 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         
         cell.indexLabel.text = "\(index + 1)"
         cell.createdAtLabel.text = (msgDict["create_date"] as! String)
+        
+        cell.qrButton.tag = index
+        cell.detailsButton.tag = index
+        
+        cell.qrButton.addTarget(self, action: #selector(MessagesTableViewController.qrButtonPressed(_:)),
+                                forControlEvents: .TouchUpInside)
+        cell.detailsButton.addTarget(self, action: #selector(MessagesTableViewController.detailsButtonPressed(_:)),
+                                     forControlEvents: .TouchUpInside)
         
         return cell
     }
@@ -56,6 +96,14 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if qrViewController != nil {
+            qrViewController.view.frame = view.layer.bounds
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,6 +114,17 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         
         for case let x as UIScrollView in tableView.subviews {
             x.delaysContentTouches = false
+        }
+        
+        qrViewController = storyboard?.instantiateViewControllerWithIdentifier("QRVC") as! QRViewController
+        qrViewController.view.frame = view.layer.bounds
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        if qrViewController != nil && qrViewController.view.superview == nil {
+            qrViewController = nil
         }
     }
 }
