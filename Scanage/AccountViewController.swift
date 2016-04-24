@@ -36,10 +36,8 @@ class AccountViewController: UIViewController {
     }
     
     func switchToMessagesView(messagesData: NSArray) {
-        if messagesTableViewController == nil {
-            messagesTableViewController = storyboard?.instantiateViewControllerWithIdentifier("MessagesTableVC") as! MessagesTableViewController
-            messagesTableViewController.view.frame = view.layer.bounds
-        }
+        messagesTableViewController = storyboard?.instantiateViewControllerWithIdentifier("MessagesTableVC") as! MessagesTableViewController
+        messagesTableViewController.view.frame = view.layer.bounds
         
         messagesTableViewController.messagesData = messagesData
         

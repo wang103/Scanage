@@ -428,6 +428,9 @@
                             <constraint firstItem="9p1-jH-2Bo" firstAttribute="leading" secondItem="bd2-3j-qLR" secondAttribute="leading" id="zhh-cl-oVh"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="9p1-jH-2Bo" id="TN1-es-naV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z1A-LW-7gJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

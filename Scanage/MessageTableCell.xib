@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessagesTableIdentifier" rowHeight="82" id="ATw-lz-YZi" customClass="MessageTableCell" customModule="Scanage" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ATw-lz-YZi" id="TaL-ke-Asd">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvL-x1-p38">
+                        <rect key="frame" x="8" y="8" width="75" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oG9-51-fPW">
+                        <rect key="frame" x="235" y="4" width="77" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="77" id="6da-YX-Aa7"/>
+                            <constraint firstAttribute="height" constant="30" id="hNU-2F-fwq"/>
+                        </constraints>
+                        <state key="normal" title="QR code" backgroundImage="button_white"/>
+                        <state key="highlighted" backgroundImage="button_blue"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9FR-nJ-tc4">
+                        <rect key="frame" x="8" y="46" width="219" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j32-qW-jqc">
+                        <rect key="frame" x="235" y="42" width="77" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="aYl-jQ-yZa"/>
+                            <constraint firstAttribute="width" constant="77" id="tpd-Eu-UKg"/>
+                        </constraints>
+                        <state key="normal" title="Details" backgroundImage="button_white"/>
+                        <state key="highlighted" backgroundImage="button_blue"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="j32-qW-jqc" firstAttribute="leading" secondItem="9FR-nJ-tc4" secondAttribute="trailing" constant="8" id="2ia-k4-i6C"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="j32-qW-jqc" secondAttribute="trailing" id="6vg-1K-WXJ"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="pvL-x1-p38" secondAttribute="leading" id="D6r-rO-LlM"/>
+                    <constraint firstAttribute="topMargin" secondItem="pvL-x1-p38" secondAttribute="top" id="PaL-Qf-Bvg"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="9FR-nJ-tc4" secondAttribute="leading" id="Uq7-cP-khM"/>
+                    <constraint firstItem="j32-qW-jqc" firstAttribute="top" secondItem="oG9-51-fPW" secondAttribute="bottom" constant="8" id="coP-ZR-bWT"/>
+                    <constraint firstItem="9FR-nJ-tc4" firstAttribute="baseline" secondItem="j32-qW-jqc" secondAttribute="baseline" id="jE9-DZ-SVY"/>
+                    <constraint firstItem="oG9-51-fPW" firstAttribute="top" secondItem="TaL-ke-Asd" secondAttribute="topMargin" constant="-4" id="oOJ-fs-9y2"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="oG9-51-fPW" secondAttribute="trailing" id="zMB-a5-kSe"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="createdAtLabel" destination="9FR-nJ-tc4" id="xLK-pg-bfT"/>
+                <outlet property="detailsButton" destination="j32-qW-jqc" id="dww-CD-Pq1"/>
+                <outlet property="qrButton" destination="oG9-51-fPW" id="PYJ-Oo-eYS"/>
+            </connections>
+            <point key="canvasLocation" x="414" y="378"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="button_blue" width="29" height="37"/>
+        <image name="button_white" width="29" height="38"/>
+    </resources>
+</document>

@@ -15,26 +15,27 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
     
     var messagesData: NSArray! = nil
     
+    @IBOutlet var tableView: UITableView!
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messagesData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(tableIdentifier)
-        
-        if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: tableIdentifier)
-        }
+        let cell = tableView.dequeueReusableCellWithIdentifier(tableIdentifier, forIndexPath: indexPath) as! MessageTableCell
         
         let index = indexPath.row
         let msgDict = messagesData.objectAtIndex(index) as! NSDictionary
         
-        cell!.textLabel!.text = (msgDict["create_date"] as! String)
+        cell.createdAtLabel.text = (msgDict["create_date"] as! String)
         
-        return cell!
+        return cell
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 81.0
+    }
     
     private func removeFromParentHelper() {
         self.willMoveToParentViewController(nil)
@@ -49,5 +50,17 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         if accountVC != nil {
             accountVC!.displayUserInfo()
         }
+        
+        messagesData = nil
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.registerClass(MessageTableCell.self, forCellReuseIdentifier: tableIdentifier)
+        
+        let nib = UINib(nibName: "MessageTableCell", bundle: nil)
+        tableView.registerNib(nib, forCellReuseIdentifier: tableIdentifier)
     }
 }
