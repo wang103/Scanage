@@ -259,10 +259,10 @@
             </objects>
             <point key="canvasLocation" x="750" y="-321"/>
         </scene>
-        <!--View Controller-->
+        <!--QR View Controller-->
         <scene sceneID="1f0-QJ-s1a">
             <objects>
-                <viewController storyboardIdentifier="QRVC" id="hnY-6r-lQm" customClass="QRViewController" customModule="Scanage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QRVC" title="QR View Controller" id="hnY-6r-lQm" customClass="QRViewController" customModule="Scanage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mjw-lA-BF2"/>
                         <viewControllerLayoutGuide type="bottom" id="nsF-tf-tfr"/>
@@ -292,18 +292,6 @@
                                     <constraint firstAttribute="width" secondItem="vSO-bD-Cb6" secondAttribute="height" multiplier="1:1" id="amR-ul-dFt"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRF-7y-1NW">
-                                <rect key="frame" x="12" y="463" width="140" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="3NN-Ek-A6L"/>
-                                    <constraint firstAttribute="height" constant="30" id="jg3-M6-cfs"/>
-                                </constraints>
-                                <state key="normal" title="Send via Email" backgroundImage="button_white"/>
-                                <state key="highlighted" backgroundImage="button_blue"/>
-                                <connections>
-                                    <action selector="sendEmail:" destination="hnY-6r-lQm" eventType="touchUpInside" id="3fP-g8-BKK"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyY-J0-6Uj">
                                 <rect key="frame" x="230" y="550" width="140" height="30"/>
                                 <constraints>
@@ -314,6 +302,18 @@
                                 <state key="highlighted" backgroundImage="button_blue"/>
                                 <connections>
                                     <action selector="saveImage:" destination="hnY-6r-lQm" eventType="touchUpInside" id="KQA-6A-64L"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRF-7y-1NW">
+                                <rect key="frame" x="230" y="512" width="140" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="3NN-Ek-A6L"/>
+                                    <constraint firstAttribute="height" constant="30" id="jg3-M6-cfs"/>
+                                </constraints>
+                                <state key="normal" title="Send via Email" backgroundImage="button_white"/>
+                                <state key="highlighted" backgroundImage="button_blue"/>
+                                <connections>
+                                    <action selector="sendEmail:" destination="hnY-6r-lQm" eventType="touchUpInside" id="3fP-g8-BKK"/>
                                 </connections>
                             </button>
                         </subviews>
