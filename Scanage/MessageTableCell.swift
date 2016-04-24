@@ -11,6 +11,7 @@ import UIKit
 
 class MessageTableCell: UITableViewCell {
     
+    @IBOutlet var indexLabel: UILabel!
     @IBOutlet var createdAtLabel: UILabel!
     @IBOutlet var qrButton: UIButton!
     @IBOutlet var detailsButton: UIButton!

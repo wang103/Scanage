@@ -28,6 +28,7 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         let index = indexPath.row
         let msgDict = messagesData.objectAtIndex(index) as! NSDictionary
         
+        cell.indexLabel.text = "\(index + 1)"
         cell.createdAtLabel.text = (msgDict["create_date"] as! String)
         
         return cell
@@ -62,5 +63,9 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         
         let nib = UINib(nibName: "MessageTableCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: tableIdentifier)
+        
+        for case let x as UIScrollView in tableView.subviews {
+            x.delaysContentTouches = false
+        }
     }
 }
