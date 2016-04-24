@@ -43,6 +43,11 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
+        let accountVC = self.parentViewController as? AccountViewController
         self.removeFromParentHelper()
+        
+        if accountVC != nil {
+            accountVC!.displayUserInfo()
+        }
     }
 }
