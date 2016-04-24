@@ -161,7 +161,8 @@ class MessagesTableViewController: UIViewController, UITableViewDataSource, UITa
         let msgDict = messagesData.objectAtIndex(index) as! NSDictionary
         
         cell.indexLabel.text = "\(index + 1)"
-        cell.createdAtLabel.text = (msgDict["create_date"] as! String)
+        let utcTimeStr = msgDict["create_date"] as! String
+        cell.createdAtLabel.text = Utils.convertUTCToLocal(utcTimeStr)
         
         cell.qrButton.tag = index
         cell.detailsButton.tag = index

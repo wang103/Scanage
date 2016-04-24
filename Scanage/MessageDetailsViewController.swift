@@ -116,7 +116,9 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
         let fieldsDataDict = fieldsData.valueForKey("msg_detail") as! NSDictionary
         
         self.creatorField.text = fieldsDataDict.valueForKey("creator") as? String
-        self.dateField.text = fieldsDataDict.valueForKey("create_date") as? String
+        
+        let utcTimeStr = fieldsDataDict.valueForKey("create_date") as! String
+        self.dateField.text = Utils.convertUTCToLocal(utcTimeStr)
         
         if audioData != nil {
             do {
