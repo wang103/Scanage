@@ -15,6 +15,8 @@ protocol ScanningViewControllerDelegate {
 
 class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, ScanningViewControllerDelegate {
 
+    @IBOutlet var cameraView: UIView!
+    
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var spinnerMsgLabel: UILabel!
     
@@ -169,9 +171,9 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     func addVideoPreviewLayer() {
         captureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         captureVideoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        captureVideoPreviewLayer?.frame = view.layer.bounds
+        captureVideoPreviewLayer?.frame = cameraView.layer.bounds
         
-        self.view.layer.addSublayer(captureVideoPreviewLayer!)
+        self.cameraView.layer.addSublayer(captureVideoPreviewLayer!)
         
         captureSession?.startRunning()
     }
@@ -195,19 +197,19 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         qrCodeView?.layer.borderColor = UIColor.redColor().CGColor
         qrCodeView?.layer.borderWidth = 5
         
-        self.view.addSubview(qrCodeView!)
-        self.view.bringSubviewToFront(qrCodeView!)
+        self.cameraView.addSubview(qrCodeView!)
+        self.cameraView.bringSubviewToFront(qrCodeView!)
     }
     
     func initSpinner() {
-        self.view.bringSubviewToFront(spinner)
-        self.view.bringSubviewToFront(spinnerMsgLabel)
+        self.cameraView.bringSubviewToFront(spinner)
+        self.cameraView.bringSubviewToFront(spinnerMsgLabel)
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        captureVideoPreviewLayer?.frame = view.layer.bounds
+        captureVideoPreviewLayer?.frame = cameraView.layer.bounds
         if captureVideoPreviewLayer?.connection.supportsVideoOrientation == true {
             updateVideoPreviewLayerOrientation()
         }
