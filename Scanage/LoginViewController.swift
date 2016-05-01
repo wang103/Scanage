@@ -52,6 +52,11 @@ class LoginViewController: UIViewController {
             else {
                 let fLoggedIn = result!.valueForKey("is_logged_in") as! Bool
                 if fLoggedIn {
+                    // Successfully logged in.
+                    if let accountVC = self.parentViewController as? AccountViewController {
+                        accountVC.displayUserInfo()
+                    }
+                    
                     self.removeFromParent()
                 }
             }
