@@ -21,6 +21,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     
     @IBOutlet var recordingButton: UIButton!
     @IBOutlet var playingButton: UIButton!
+    @IBOutlet var clearRecordButton: UIButton!
     @IBOutlet var voiceInfoLabel: UILabel!
     private var recorded: Bool = false
     
@@ -47,6 +48,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
         recordingButton.enabled = true
         playingButton.enabled = false
+        clearRecordButton.enabled = false
         voiceInfoLabel.text = ""
         recorded = false
         
@@ -173,6 +175,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         recordingButton.enabled = true
         playingButton.setTitle("Start Playing", forState: .Normal)
+        clearRecordButton.enabled = true
         submitButton.enabled = true
     }
     
@@ -181,6 +184,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             // Recording -> not recording
             recordingButton.setTitle("Start Recording", forState: .Normal)
             playingButton.enabled = true
+            clearRecordButton.enabled = true
             submitButton.enabled = true
             
             audioRecorder!.stop()
@@ -204,6 +208,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             recordingButton.setTitle("Stop Recording", forState: .Normal)
             playingButton.setTitle("Start Playing", forState: .Normal)
             playingButton.enabled = false
+            clearRecordButton.enabled = false
             voiceInfoLabel.text = "Recording..."
             submitButton.enabled = false
             
@@ -222,6 +227,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             // Playing -> not playing
             recordingButton.enabled = true
             playingButton.setTitle("Start Playing", forState: .Normal)
+            clearRecordButton.enabled = true
             submitButton.enabled = true
             
             audioPlayer!.stop()
@@ -230,6 +236,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
             // Not playing -> playing
             recordingButton.enabled = false
             playingButton.setTitle("Stop Playing", forState: .Normal)
+            clearRecordButton.enabled = false
             submitButton.enabled = false
             
             do {
@@ -243,11 +250,47 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         }
     }
     
-    func initAudioRecorder() -> Bool {
-        let fileManager = NSFileManager.defaultManager()
+    @IBAction func clearRecording(sender: UIButton) {
+        if audioRecorder?.recording == true {
+            return
+        }
         
-        let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-        let voiceMsgFileURL = documentsURL.URLByAppendingPathComponent("voice_msg.m4a")
+        if audioPlayer?.playing == true {
+            return
+        }
+        
+        let controller = UIAlertController(title: "Are you sure?",
+                                           message:nil, preferredStyle: .ActionSheet)
+        
+        let yesAction = UIAlertAction(title: "Yes, clear recording",
+                                      style: .Destructive, handler: { action in
+            self.recordingButton.enabled = true
+            self.playingButton.enabled = false
+            self.clearRecordButton.enabled = false
+            
+            let fileManager = NSFileManager.defaultManager()
+            let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let voiceMsgFileURL = documentsURL.URLByAppendingPathComponent("voice_msg.m4a")
+            
+            self.removeAudioRecordFile(voiceMsgFileURL)
+        })
+        
+        let noAction = UIAlertAction(title: "No", style: .Cancel, handler: nil)
+        
+        controller.addAction(yesAction)
+        controller.addAction(noAction)
+        
+        if let ppc = controller.popoverPresentationController {
+            ppc.sourceView = sender
+            ppc.sourceRect = sender.bounds
+        }
+        
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    
+    private func removeAudioRecordFile(voiceMsgFileURL: NSURL) {
+        let fileManager = NSFileManager.defaultManager()
         
         if fileManager.fileExistsAtPath(voiceMsgFileURL.path!) {
             do {
@@ -259,6 +302,17 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         }
         
         recorded = false
+        
+        voiceInfoLabel.text = ""
+    }
+    
+    
+    func initAudioRecorder() -> Bool {
+        let fileManager = NSFileManager.defaultManager()
+        let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        let voiceMsgFileURL = documentsURL.URLByAppendingPathComponent("voice_msg.m4a")
+        
+        removeAudioRecordFile(voiceMsgFileURL)
         
         let recordSettings = [
             AVEncoderAudioQualityKey: AVAudioQuality.Medium.rawValue,
@@ -370,12 +424,15 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     }
     
     private var playingButtonState: Bool = false
+    private var clearRecordButtonState: Bool = false
     
     func startSpinner() {
         spinnerMsgLabel.text = ""
         recordingButton.enabled = false
         playingButtonState = playingButton.enabled
         playingButton.enabled = false
+        clearRecordButtonState = clearRecordButton.enabled
+        clearRecordButton.enabled = false
         pickImageButton.enabled = false
         clearImageButton.enabled = false
         textView.editable = false
@@ -389,6 +446,7 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
         recordingButton.enabled = true
         playingButton.enabled = playingButtonState
+        clearRecordButton.enabled = clearRecordButtonState
         pickImageButton.enabled = true
         clearImageButton.enabled = imageView.image != nil
         textView.editable = true
