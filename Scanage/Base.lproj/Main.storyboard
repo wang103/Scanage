@@ -604,18 +604,24 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kqk-TQ-tf1">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
-                                    <navigationItem title="QR Code" id="g57-q4-X40"/>
+                                    <navigationItem title="QR Code" id="g57-q4-X40">
+                                        <barButtonItem key="rightBarButtonItem" title="Photos" id="0Qh-Fk-b0B">
+                                            <connections>
+                                                <action selector="insertQRFromPhotos:" destination="8rJ-Kc-sve" id="6ht-FH-dys"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weu-x1-fh3">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Cm8-BK-c67">
-                                        <rect key="frame" x="290" y="234" width="20" height="20"/>
+                                        <rect key="frame" x="290" y="236" width="20" height="20"/>
                                         <color key="color" red="0.27058823529411763" green="0.60392156862745094" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                     </activityIndicatorView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIo-ys-ynT">
-                                        <rect key="frame" x="180" y="201" width="240" height="85"/>
+                                        <rect key="frame" x="180" y="204" width="240" height="85"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -630,7 +636,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOM-fs-vdI">
-                                        <rect key="frame" x="20" y="262" width="560" height="21"/>
+                                        <rect key="frame" x="20" y="264" width="560" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="lcb-we-9UJ"/>
                                         </constraints>
@@ -641,13 +647,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Cm8-BK-c67" firstAttribute="centerX" secondItem="weu-x1-fh3" secondAttribute="centerX" id="9sa-Pf-L8f"/>
+                                    <constraint firstItem="Cm8-BK-c67" firstAttribute="centerX" secondItem="weu-x1-fh3" secondAttribute="centerX" id="5zN-41-aTH"/>
                                     <constraint firstItem="uOM-fs-vdI" firstAttribute="centerX" secondItem="weu-x1-fh3" secondAttribute="centerX" id="Mvi-cj-Chh"/>
                                     <constraint firstAttribute="trailing" secondItem="uOM-fs-vdI" secondAttribute="trailing" constant="20" id="REA-jP-JPW"/>
-                                    <constraint firstItem="uOM-fs-vdI" firstAttribute="top" secondItem="Cm8-BK-c67" secondAttribute="bottom" constant="8" id="SRf-Ko-qYF"/>
                                     <constraint firstItem="uOM-fs-vdI" firstAttribute="leading" secondItem="weu-x1-fh3" secondAttribute="leading" constant="20" id="US9-WI-2UG"/>
                                     <constraint firstItem="XIo-ys-ynT" firstAttribute="centerX" secondItem="weu-x1-fh3" secondAttribute="centerX" id="WAo-cQ-q1z"/>
-                                    <constraint firstItem="Cm8-BK-c67" firstAttribute="centerY" secondItem="weu-x1-fh3" secondAttribute="centerY" id="aXf-NN-9GN"/>
+                                    <constraint firstItem="uOM-fs-vdI" firstAttribute="top" secondItem="Cm8-BK-c67" secondAttribute="bottom" constant="8" id="guu-gr-XZS"/>
+                                    <constraint firstItem="Cm8-BK-c67" firstAttribute="centerY" secondItem="weu-x1-fh3" secondAttribute="centerY" id="jpD-vr-W3v"/>
                                     <constraint firstItem="XIo-ys-ynT" firstAttribute="centerY" secondItem="weu-x1-fh3" secondAttribute="centerY" id="uul-K4-QRT"/>
                                 </constraints>
                             </view>
@@ -656,14 +662,16 @@
                         <constraints>
                             <constraint firstItem="Kqk-TQ-tf1" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="8rC-FG-U6k"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="weu-x1-fh3" secondAttribute="bottom" id="Cyn-VC-Foy"/>
+                            <constraint firstItem="Kqk-TQ-tf1" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="FLS-WF-Adc"/>
+                            <constraint firstAttribute="trailing" secondItem="Kqk-TQ-tf1" secondAttribute="trailing" id="Fq9-v6-kCD"/>
                             <constraint firstItem="weu-x1-fh3" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="HUU-ic-maE"/>
                             <constraint firstItem="weu-x1-fh3" firstAttribute="top" secondItem="Kqk-TQ-tf1" secondAttribute="bottom" id="Llm-FM-15h"/>
                             <constraint firstAttribute="trailing" secondItem="weu-x1-fh3" secondAttribute="trailing" id="O7f-yW-cPz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Kqk-TQ-tf1" secondAttribute="trailing" constant="-20" id="iCm-69-QwE"/>
-                            <constraint firstItem="Kqk-TQ-tf1" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-20" id="sDs-lb-0dq"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Scan QR" image="tab2_scan" id="cPa-gy-q4n"/>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="cameraView" destination="weu-x1-fh3" id="ODo-pf-hdK"/>
                         <outlet property="spinner" destination="Cm8-BK-c67" id="JSX-pE-hwP"/>

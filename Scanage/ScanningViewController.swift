@@ -13,7 +13,8 @@ protocol ScanningViewControllerDelegate {
     func startCaptureSession()
 }
 
-class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, ScanningViewControllerDelegate {
+class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate,
+    UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScanningViewControllerDelegate {
 
     @IBOutlet var cameraView: UIView!
     
@@ -24,8 +25,54 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     private var captureVideoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var qrCodeView: UIView?
     
+    private let imagePicker = UIImagePickerController()
+    private let qrDetector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
+    
     private var msgDetailsViewController: MessageDetailsViewController!
     
+    
+    @IBAction func insertQRFromPhotos(sender: UIBarButtonItem) {
+        captureSession?.stopRunning()
+        
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        dismissViewControllerAnimated(true, completion: {
+        
+            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                let ciImage = CIImage(CGImage: pickedImage.CGImage!)
+            
+                let features = self.qrDetector.featuresInImage(ciImage) as! [CIQRCodeFeature]
+            
+                if features.count == 0 {
+                    let alert = UIAlertController(title: "Invalid Image", message: "Image does not contain QR code.",
+                        preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel,
+                        handler: {(alert: UIAlertAction!) in self.startCaptureSession()}))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                else {
+                    let qrCodeStr = features[0].messageString
+                    self.qrCodeCaptured(qrCodeStr)
+                }
+            }
+            else {
+                print("Error: picked image is not an UIImage.")
+                self.startCaptureSession()
+            }
+        
+        })
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+        self.startCaptureSession()
+    }
     
     func switchToMsgDetailsView(result: NSDictionary) {
         if msgDetailsViewController == nil {
@@ -233,6 +280,8 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
             initQRView()
             initSpinner()
         }
+        
+        imagePicker.delegate = self
         
         msgDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("MsgDetailsVC") as! MessageDetailsViewController
         msgDetailsViewController.view.frame = view.layer.bounds
