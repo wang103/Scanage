@@ -54,6 +54,43 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    func longPress(gesture: UITapGestureRecognizer) {
+        if gesture.state != .Began {
+            return
+        }
+        
+        let controller = UIAlertController(title: "What would you like to do?",
+                                           message:nil, preferredStyle: .ActionSheet)
+        
+        let saveAction = UIAlertAction(title: "Save image",
+                                       style: .Default, handler: { action in
+            UIImageWriteToSavedPhotosAlbum(self.image!, self,
+                #selector(ImageViewController.imageSaved(_:didFinishSavingWithError:contextInfo:)), nil)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        controller.addAction(saveAction)
+        controller.addAction(cancelAction)
+        
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func imageSaved(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafePointer<Void>) {
+        if error == nil {
+            let alert = UIAlertController(title: "Saved!", message: "Image has been saved to photos.",
+                                          preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else {
+            let alert = UIAlertController(title: "Save Error", message: error?.localizedDescription,
+                                          preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,7 +104,12 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         doubleTap.numberOfTapsRequired = 2
         scrollView.addGestureRecognizer(doubleTap)
         
+        // Long press to show menu for image.
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(ImageViewController.longPress(_:)))
+        scrollView.addGestureRecognizer(longPress)
+        
         singleTap.requireGestureRecognizerToFail(doubleTap)
+        singleTap.requireGestureRecognizerToFail(longPress)
         
         scrollView.scrollEnabled = true
         scrollView.minimumZoomScale = 1.0
