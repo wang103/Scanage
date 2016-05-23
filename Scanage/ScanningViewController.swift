@@ -19,7 +19,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     @IBOutlet var cameraView: UIView!
     
     @IBOutlet var spinner: UIActivityIndicatorView!
-    @IBOutlet var spinnerMsgLabel: UILabel!
     
     private var captureSession: AVCaptureSession?   // coordinate the flow of data from input device to output device
     private var captureVideoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -88,7 +87,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         let fieldsDataDict = result.valueForKey("msg_detail") as! NSDictionary
         
         if let audioURLStr = fieldsDataDict["audio_file"] {
-            spinnerMsgLabel.text = "Downloading audio file"
             
             if let url = NSURL(string: audioURLStr as! String) {
                 if let data = NSData(contentsOfURL: url) {
@@ -99,7 +97,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
         
         msgDetailsViewController.imageData = nil
         if let imageURLStr = fieldsDataDict["image_file"] {
-            spinnerMsgLabel.text = "Downloading image file"
             
             if let url = NSURL(string: imageURLStr as! String) {
                 if let data = NSData(contentsOfURL: url) {
@@ -107,8 +104,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
                 }
             }
         }
-        
-        spinnerMsgLabel.text = ""
         
         self.spinner.stopAnimating()
         
@@ -127,7 +122,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     
     func qrCodeCaptured(qrString: String) {
         spinner.startAnimating()
-        spinnerMsgLabel.text = "Looking up..."
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
         dispatch_async(queue) {
@@ -138,7 +132,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
                 
                 if result == nil || result!.valueForKey("success") as! Bool == false {
                     // QR code is not a Scanage QR.
-                    self.spinnerMsgLabel.text = ""
                     self.spinner.stopAnimating()
                     
                     let alert = UIAlertController(title: "Invalid QR code", message: "This is not a QR code created by this app.",
@@ -250,7 +243,6 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     
     func initSpinner() {
         self.cameraView.bringSubviewToFront(spinner)
-        self.cameraView.bringSubviewToFront(spinnerMsgLabel)
     }
     
     override func viewWillLayoutSubviews() {

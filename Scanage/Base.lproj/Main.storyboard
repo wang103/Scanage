@@ -631,10 +631,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weu-x1-fh3">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <subviews>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Cm8-BK-c67">
-                                        <rect key="frame" x="290" y="236" width="20" height="20"/>
-                                        <color key="color" red="0.27058823529411763" green="0.60392156862745094" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
-                                    </activityIndicatorView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIo-ys-ynT">
                                         <rect key="frame" x="180" y="204" width="240" height="85"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -650,24 +646,15 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOM-fs-vdI">
-                                        <rect key="frame" x="20" y="264" width="560" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="lcb-we-9UJ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
-                                        <color key="textColor" red="0.27058823529999998" green="0.60392156860000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Cm8-BK-c67">
+                                        <rect key="frame" x="290" y="236" width="20" height="20"/>
+                                        <color key="color" red="0.27058823529411763" green="0.60392156862745094" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Cm8-BK-c67" firstAttribute="centerX" secondItem="weu-x1-fh3" secondAttribute="centerX" id="5zN-41-aTH"/>
-                                    <constraint firstItem="uOM-fs-vdI" firstAttribute="centerX" secondItem="weu-x1-fh3" secondAttribute="centerX" id="Mvi-cj-Chh"/>
-                                    <constraint firstAttribute="trailing" secondItem="uOM-fs-vdI" secondAttribute="trailing" constant="20" id="REA-jP-JPW"/>
-                                    <constraint firstItem="uOM-fs-vdI" firstAttribute="leading" secondItem="weu-x1-fh3" secondAttribute="leading" constant="20" id="US9-WI-2UG"/>
                                     <constraint firstItem="XIo-ys-ynT" firstAttribute="centerX" secondItem="weu-x1-fh3" secondAttribute="centerX" id="WAo-cQ-q1z"/>
-                                    <constraint firstItem="uOM-fs-vdI" firstAttribute="top" secondItem="Cm8-BK-c67" secondAttribute="bottom" constant="8" id="guu-gr-XZS"/>
                                     <constraint firstItem="Cm8-BK-c67" firstAttribute="centerY" secondItem="weu-x1-fh3" secondAttribute="centerY" id="jpD-vr-W3v"/>
                                     <constraint firstItem="XIo-ys-ynT" firstAttribute="centerY" secondItem="weu-x1-fh3" secondAttribute="centerY" id="uul-K4-QRT"/>
                                 </constraints>
@@ -690,7 +677,6 @@
                     <connections>
                         <outlet property="cameraView" destination="weu-x1-fh3" id="ODo-pf-hdK"/>
                         <outlet property="spinner" destination="Cm8-BK-c67" id="JSX-pE-hwP"/>
-                        <outlet property="spinnerMsgLabel" destination="uOM-fs-vdI" id="GwV-Su-kwV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
