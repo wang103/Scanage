@@ -64,6 +64,7 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
             audioPlayer!.stop()
             audioPlayer!.currentTime = 0
             playInfoLabel.text = getAudioTrackLabel(0)
+            playProgress.setProgress(0, animated: false)
             updater!.invalidate()
             playButton.setTitle("Play", forState: .Normal)
         }
@@ -177,6 +178,7 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     @IBAction func removeFromParent(sender: UIBarButtonItem) {
         if audioPlayer != nil {
             audioPlayer!.stop()
+            playButton.setTitle("Play", forState: .Normal)
         }
         if updater != nil {
             updater!.invalidate()
