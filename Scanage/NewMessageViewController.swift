@@ -326,7 +326,6 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-            try audioSession.overrideOutputAudioPort(.Speaker)
             self.audioRecorder = try AVAudioRecorder(URL: voiceMsgFileURL, settings: recordSettings as! [String : AnyObject])
             if self.audioRecorder!.prepareToRecord() == false {
                 struct Error: ErrorType {
@@ -416,6 +415,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        Utils.updateAudioPlayerSettings()
         
         // If not showing the login view, test if need to log in.
         if loginViewController == nil || loginViewController.view.superview == nil {

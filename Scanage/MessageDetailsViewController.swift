@@ -114,6 +114,8 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        Utils.updateAudioPlayerSettings()
+        
         let fieldsDataDict = fieldsData.valueForKey("msg_detail") as! NSDictionary
         
         self.creatorField.text = fieldsDataDict.valueForKey("creator") as? String
@@ -203,14 +205,6 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.overrideOutputAudioPort(.Speaker)
-        }
-        catch {
-            print("Error: unable to play audio via speaker")
-        }
         
         imageViewController = storyboard?.instantiateViewControllerWithIdentifier("ImageVC") as! ImageViewController
         imageViewController.view.frame = view.layer.bounds

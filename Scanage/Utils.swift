@@ -7,8 +7,12 @@
 //
 
 import Foundation
+import AVFoundation
 
 class Utils {
+    
+    static let settingsPrivateModeKey = "PRIVATE_MODE"
+    
     
     static func convertUTCToLocal(utcStr: String) -> String {
         let dateFormatter = NSDateFormatter()
@@ -20,6 +24,19 @@ class Utils {
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
         return dateFormatter.stringFromDate(date!)
+    }
+    
+    static func updateAudioPlayerSettings() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let fPrivateMode = defaults.boolForKey(Utils.settingsPrivateModeKey)
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.overrideOutputAudioPort(fPrivateMode ? .None : .Speaker)
+        }
+        catch {
+            print("Error: unable to override output audio port. Private mode: \(fPrivateMode)")
+        }
     }
     
 }
