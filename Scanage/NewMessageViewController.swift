@@ -401,6 +401,10 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         ServerAPIHelper.getUserInfo(getUserInfoCompleted)
     }
     
+    func appWillEnterForeground(notification: NSNotification) {
+        Utils.updateAudioPlayerSettings()
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -418,10 +422,18 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
         
         Utils.updateAudioPlayerSettings()
         
+        let app = UIApplication.sharedApplication()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewMessageViewController.appWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: app)
+        
         // If not showing the login view, test if need to log in.
         if loginViewController == nil || loginViewController.view.superview == nil {
             testIfLoggedIn()
         }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     private var playingButtonState: Bool = false

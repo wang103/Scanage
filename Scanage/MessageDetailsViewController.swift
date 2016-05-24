@@ -111,10 +111,17 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     
+    func appWillEnterForeground(notification: NSNotification) {
+        Utils.updateAudioPlayerSettings()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         Utils.updateAudioPlayerSettings()
+        
+        let app = UIApplication.sharedApplication()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessageDetailsViewController.appWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: app)
         
         let fieldsDataDict = fieldsData.valueForKey("msg_detail") as! NSDictionary
         
@@ -171,6 +178,11 @@ class MessageDetailsViewController: UIViewController, AVAudioPlayerDelegate {
             self.textMsgField.text = textMsg!
             self.textMsgErrorLabel.text = ""
         }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func tap(gesture: UITapGestureRecognizer) {

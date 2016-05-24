@@ -28,6 +28,7 @@ class Utils {
     
     static func updateAudioPlayerSettings() {
         let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.synchronize()
         let fPrivateMode = defaults.boolForKey(Utils.settingsPrivateModeKey)
         
         let audioSession = AVAudioSession.sharedInstance()

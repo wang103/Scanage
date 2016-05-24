@@ -19,6 +19,8 @@ class AccountViewController: UIViewController {
     @IBOutlet var logoutButton: UIButton!
     @IBOutlet var messagesButton: UIButton!
     
+    @IBOutlet var privateModeSwitch: UISwitch!
+    
     private var loginViewController: LoginViewController!
     private var messagesTableViewController: MessagesTableViewController!
     
@@ -162,6 +164,19 @@ class AccountViewController: UIViewController {
         messagesButton.enabled = true
     }
     
+    @IBAction func privateModeSwitched(sender: AnyObject) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(privateModeSwitch.on, forKey: Utils.settingsPrivateModeKey)
+        defaults.synchronize()
+    }
+    
+    func appWillEnterForeground(notification: NSNotification) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.synchronize()
+        let fPrivateMode = defaults.boolForKey(Utils.settingsPrivateModeKey)
+        privateModeSwitch.on = fPrivateMode
+    }
+    
     override func viewWillLayoutSubviews() {
         if loginViewController != nil {
             loginViewController.view.frame = view.layer.bounds
@@ -175,11 +190,23 @@ class AccountViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let fPrivateMode = defaults.boolForKey(Utils.settingsPrivateModeKey)
+        privateModeSwitch.on = fPrivateMode
+        
+        let app = UIApplication.sharedApplication()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AccountViewController.appWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: app)
+        
         // If not showing any sub view, grab the user info.
         if (loginViewController == nil || loginViewController.view.superview == nil) &&
            (messagesTableViewController == nil || messagesTableViewController.view.superview == nil) {
             displayUserInfo()
         }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewDidLoad() {
