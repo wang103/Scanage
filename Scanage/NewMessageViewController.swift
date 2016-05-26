@@ -433,7 +433,8 @@ class NewMessageViewController: UIViewController, AVAudioPlayerDelegate, AVAudio
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        let app = UIApplication.sharedApplication()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: app)
     }
     
     private var playingButtonState: Bool = false

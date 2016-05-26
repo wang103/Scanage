@@ -139,7 +139,7 @@ class QRViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let qrImage = UIImage(CIImage: scaledImage)
         
         let appName = getAppName()
-        let text = "Scan this using \(appName), available on Apple App Store."
+        let text = "Created by \(appName), available on Apple App Store."
         let qrImageWithText = addTextToImage(text, img: qrImage)
         
         qrImageView.image = qrImageWithText
