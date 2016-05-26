@@ -123,10 +123,17 @@ class ScanningViewController: UIViewController, AVCaptureMetadataOutputObjectsDe
     func qrCodeCaptured(qrString: String) {
         spinner.startAnimating()
         
+        var qrStr = qrString
+        
+        // If this is actually an URL, only take the last part, which is the actual QR string.
+        if qrString.hasPrefix("http") {
+            qrStr = (qrString as NSString).lastPathComponent
+        }
+        
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 /*flags*/)
         dispatch_async(queue) {
             // Send a GET request to retrieve the msg associated with the QR string.
-            let result = ServerAPIHelper.getMessage(qrString)
+            let result = ServerAPIHelper.getMessage(qrStr)
             
             dispatch_async(dispatch_get_main_queue()) {
                 

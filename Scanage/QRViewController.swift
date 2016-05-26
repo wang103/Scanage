@@ -124,8 +124,11 @@ class QRViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Prepend URL to QR code so any app can scan it and go to the site.
+        let qrWithURL = ServerAPIHelper.rootURL + "msg_1/" + qrString
+        
         // Create the image.
-        let data = qrString.dataUsingEncoding(NSISOLatin1StringEncoding, allowLossyConversion: false)
+        let data = qrWithURL.dataUsingEncoding(NSISOLatin1StringEncoding, allowLossyConversion: false)
         let filter = CIFilter(name: "CIQRCodeGenerator")
         filter!.setValue(data, forKey: "inputMessage")
         
