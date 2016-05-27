@@ -73,6 +73,13 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         controller.addAction(saveAction)
         controller.addAction(cancelAction)
         
+        if let ppc = controller.popoverPresentationController {
+            ppc.sourceView = scrollView
+            ppc.sourceRect = CGRectMake(scrollView.bounds.origin.x + scrollView.bounds.size.width / 2,
+                                        scrollView.bounds.origin.y + scrollView.bounds.size.height / 2,
+                                        1, 1)
+        }
+
         presentViewController(controller, animated: true, completion: nil)
     }
     

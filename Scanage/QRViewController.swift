@@ -58,7 +58,7 @@ class QRViewController: UIViewController, MFMailComposeViewControllerDelegate {
             self.presentViewController(mailComposer, animated: true, completion: nil)
         }
         else {
-            let alert = UIAlertController(title: "Error", message: "Your device is not setup to send emails.",
+            let alert = UIAlertController(title: "Error", message: "Your device is not setup to send emails. Please add an account in the native Mail app",
                                           preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
